@@ -692,6 +692,240 @@ footer.pp-footer {
   .pp-footer-aside { font-size: 14px; padding: 14px 16px; }
 }
 
+/* ============================================
+   SPLASH — COUNTRY CLUB ENTRANCE
+   ============================================ */
+.splash {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  color: var(--cream);
+  text-align: center;
+  padding: 120px 40px 100px;
+}
+.splash-bg {
+  position: absolute; inset: 0;
+  background-image: url('images/hero.jpg');
+  background-size: cover;
+  background-position: center;
+  filter: sepia(0.18) contrast(1.06) brightness(0.92);
+  transform: scale(1.04);
+  animation: splash-kenburns 22s ease-in-out infinite alternate;
+}
+@keyframes splash-kenburns {
+  from { transform: scale(1.04) translateY(0); }
+  to   { transform: scale(1.10) translateY(-14px); }
+}
+.splash-overlay {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at center, rgba(26,26,20,0.45) 0%, rgba(26,26,20,0.88) 100%),
+    linear-gradient(180deg, rgba(26,26,20,0.35) 0%, transparent 30%, transparent 70%, rgba(26,26,20,0.55) 100%);
+}
+.splash-letterbox-top, .splash-letterbox-bottom {
+  position: absolute; left: 0; right: 0; height: 28px;
+  background: #000; z-index: 3; pointer-events: none;
+}
+.splash-letterbox-top { top: 0; }
+.splash-letterbox-bottom { bottom: 0; }
+.splash-frame {
+  position: absolute; inset: 40px;
+  border: 1px solid rgba(184,150,62,0.28);
+  pointer-events: none; z-index: 2;
+}
+.splash-frame::before, .splash-frame::after,
+.splash-frame > span::before, .splash-frame > span::after {
+  content: ''; position: absolute; width: 16px; height: 16px;
+  border: 1px solid var(--gold);
+}
+.splash-frame::before { top: -1px; left: -1px; border-right: none; border-bottom: none; }
+.splash-frame::after { top: -1px; right: -1px; border-left: none; border-bottom: none; }
+.splash-frame > span::before { bottom: -1px; left: -1px; border-right: none; border-top: none; }
+.splash-frame > span::after { bottom: -1px; right: -1px; border-left: none; border-top: none; }
+.splash-content {
+  position: relative; z-index: 4;
+  max-width: 860px;
+  display: flex; flex-direction: column; align-items: center;
+}
+.splash-crest {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 0.5em; text-transform: uppercase;
+  color: var(--gold-light);
+  display: inline-flex; align-items: center; gap: 18px;
+  padding-bottom: 36px;
+  opacity: 0; animation: fadeUp 0.9s 0.2s forwards;
+}
+.splash-crest::before, .splash-crest::after {
+  content: ''; display: inline-block;
+  width: 44px; height: 1px;
+  background: var(--gold);
+}
+.splash-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(72px, 12vw, 168px);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 0.94;
+  letter-spacing: -0.01em;
+  color: var(--cream);
+  margin: 0;
+  opacity: 0; animation: fadeUp 1.2s 0.35s forwards;
+  text-shadow: 0 6px 50px rgba(0,0,0,0.5);
+}
+.splash-title .amp {
+  display: block;
+  font-size: 0.26em;
+  color: var(--gold);
+  font-style: italic;
+  font-weight: 300;
+  margin: 10px 0;
+  letter-spacing: 0.05em;
+}
+.splash-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.55);
+  margin-top: 24px;
+  opacity: 0; animation: fadeUp 0.9s 0.6s forwards;
+}
+.splash-rule {
+  display: flex; align-items: center; justify-content: center;
+  gap: 14px;
+  margin: 46px 0 40px;
+  opacity: 0; animation: fadeUp 0.9s 0.75s forwards;
+}
+.splash-rule::before, .splash-rule::after {
+  content: ''; width: 60px; height: 1px; background: var(--gold);
+}
+.splash-rule-mark {
+  font-family: 'Playfair Display', serif;
+  color: var(--gold);
+  font-size: 18px;
+  font-style: italic;
+}
+.splash-logline {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: clamp(19px, 1.9vw, 26px);
+  line-height: 1.55;
+  max-width: 700px;
+  color: rgba(245,240,232,0.94);
+  margin: 0 0 58px;
+  opacity: 0; animation: fadeUp 0.9s 0.9s forwards;
+}
+.splash-logline::before, .splash-logline::after {
+  content: ''; display: none;
+}
+.splash-meta {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 72px;
+  margin-bottom: 72px;
+  opacity: 0; animation: fadeUp 0.9s 1.05s forwards;
+  align-items: start;
+}
+.splash-meta-col {
+  display: flex; flex-direction: column; gap: 12px; align-items: center;
+  border-top: 1px solid rgba(184,150,62,0.3);
+  padding-top: 18px;
+  min-width: 180px;
+}
+.splash-meta-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; letter-spacing: 0.4em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+.splash-meta-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  font-style: italic;
+  color: rgba(245,240,232,0.92);
+  line-height: 1.4;
+}
+.tee-time-btn {
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  gap: 16px;
+  padding: 20px 54px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--cream);
+  text-decoration: none;
+  border: 1px solid var(--gold);
+  background: transparent;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0; animation: fadeUp 0.9s 1.25s forwards;
+  position: relative;
+  overflow: hidden;
+}
+.tee-time-btn::before {
+  content: ''; position: absolute; inset: 0;
+  background: var(--gold);
+  transform: translateY(101%);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
+}
+.tee-time-btn:hover {
+  color: var(--dark);
+  letter-spacing: 0.48em;
+}
+.tee-time-btn:hover::before {
+  transform: translateY(0);
+}
+.tee-time-btn .tee-mark {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px; line-height: 1;
+  font-weight: 300;
+  transform: translateY(-1px);
+}
+.splash-scroll-hint {
+  position: absolute;
+  bottom: 48px; left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  font-family: 'DM Mono', monospace;
+  font-size: 8px; letter-spacing: 0.4em;
+  color: rgba(245,240,232,0.4);
+  text-transform: uppercase;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+}
+.splash-scroll-hint::after {
+  content: ''; width: 1px; height: 28px;
+  background: linear-gradient(to bottom, var(--gold-light), transparent);
+  animation: scrollLine 2.2s ease-in-out infinite;
+}
+@keyframes scrollLine {
+  0% { transform: scaleY(0); transform-origin: top; }
+  50% { transform: scaleY(1); transform-origin: top; }
+  51% { transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+@media (max-width: 768px) {
+  .splash { padding: 100px 20px 80px; }
+  .splash-frame { inset: 18px; }
+  .splash-crest { font-size: 8px; letter-spacing: 0.3em; gap: 10px; padding-bottom: 24px; }
+  .splash-crest::before, .splash-crest::after { width: 24px; }
+  .splash-title { font-size: clamp(60px, 18vw, 96px); }
+  .splash-sub { font-size: 8px; letter-spacing: 0.3em; margin-top: 16px; }
+  .splash-rule { margin: 30px 0 26px; }
+  .splash-rule::before, .splash-rule::after { width: 30px; }
+  .splash-logline { font-size: 17px; margin-bottom: 42px; }
+  .splash-meta { grid-template-columns: 1fr; gap: 24px; margin-bottom: 52px; }
+  .splash-meta-col { min-width: 0; padding-top: 14px; }
+  .splash-meta-value { font-size: 15px; }
+  .tee-time-btn { padding: 16px 38px; font-size: 10px; letter-spacing: 0.32em; }
+  .splash-letterbox-top, .splash-letterbox-bottom { height: 18px; }
+  .splash-scroll-hint { bottom: 26px; font-size: 7px; letter-spacing: 0.3em; }
+  .splash-scroll-hint::after { height: 20px; }
+}
+
 </style>
 </head>
 <body>
@@ -714,27 +948,45 @@ footer.pp-footer {
 </nav>
 
 <!-- HERO -->
-<section class="hero">
-  <div class="hero-left">
-    <div class="hero-bg"></div>
-    <div class="hero-overlay"></div>
-    <div class="hero-letterbox-top"></div>
-    <div class="hero-letterbox-bottom"></div>
-    <div class="hero-scene-slug">Scene 001 · Ext. Pebble Pines, Day</div>
-    <div class="hero-takecode">Take 01 · 24 fps · Dir. TBD</div>
-    <div class="hero-tag">Vertical Series Treatment</div>
-    <div class="hero-title">Pebble<em>Pines</em></div>
-    <div class="hero-subtitle">An Exclusive Country Club</div>
-  </div>
-  <div class="hero-right">
-    <div class="hero-logline">"At an exclusive country club, a caddy witnesses the unhinged and entitled conversations of members who have forgotten that he has ears."</div>
-    <div class="hero-meta">
-      <div class="hero-meta-item"><span class="meta-label">Format</span><span class="meta-value">Anthology Vertical Series</span></div>
-      <div class="hero-meta-item"><span class="meta-label">Tone</span><span class="meta-value">Dark Comedy · Satire · Camp</span></div>
-      <div class="hero-meta-item"><span class="meta-label">Comp</span><span class="meta-value">White Lotus meets Caddyshack</span></div>
+<section class="splash">
+  <div class="splash-bg"></div>
+  <div class="splash-overlay"></div>
+  <div class="splash-letterbox-top"></div>
+  <div class="splash-letterbox-bottom"></div>
+  <div class="splash-frame"><span></span></div>
+
+  <div class="splash-content">
+    <div class="splash-crest">Established · Private Membership</div>
+    <h1 class="splash-title">Pebble Pines</h1>
+    <div class="splash-sub">An Exclusive Country Club</div>
+
+    <div class="splash-rule"><span class="splash-rule-mark">×</span></div>
+
+    <p class="splash-logline">"At an exclusive country club, a caddy witnesses the unhinged and entitled conversations of members who have forgotten that he has ears."</p>
+
+    <div class="splash-meta">
+      <div class="splash-meta-col">
+        <div class="splash-meta-label">Format</div>
+        <div class="splash-meta-value">Anthology Vertical Series</div>
+      </div>
+      <div class="splash-meta-col">
+        <div class="splash-meta-label">Tone</div>
+        <div class="splash-meta-value">Dark Comedy · Satire · Camp</div>
+      </div>
+      <div class="splash-meta-col">
+        <div class="splash-meta-label">Comp</div>
+        <div class="splash-meta-value">White Lotus × Caddyshack</div>
+      </div>
     </div>
-    
+
+    <a href="#concept" class="tee-time-btn">
+      <span class="tee-mark">×</span>
+      Book a Tee Time
+      <span class="tee-mark">×</span>
+    </a>
   </div>
+
+  <div class="splash-scroll-hint">Proceed to the First Tee</div>
 </section>
 
 <!-- PHOTO STRIP -->
@@ -743,14 +995,6 @@ footer.pp-footer {
   <div class="strip-item"><img src="images/strip-2.jpg" alt=""><div class="strip-label">Scene 014 · Hole 7</div></div>
   <div class="strip-item"><img src="images/strip-3.jpg" alt=""><div class="strip-label">Scene 022 · Hole 12</div></div>
   <div class="strip-item"><img src="images/strip-4.jpg" alt=""><div class="strip-label">Scene 031 · Back Nine</div></div>
-</div>
-
-<div class="act-divider">
-  <div class="act-divider-inner">
-    <span class="act-roman">Act I</span>
-    <span class="act-x">×</span>
-    <span>The Premise</span>
-  </div>
 </div>
 
 <!-- CONCEPT -->
@@ -813,14 +1057,6 @@ footer.pp-footer {
     </div>
 
 </section>
-
-<div class="act-divider on-dark">
-  <div class="act-divider-inner">
-    <span class="act-roman">Act II</span>
-    <span class="act-x">×</span>
-    <span>The Clubhouse</span>
-  </div>
-</div>
 
 <section id="characters" style="background:var(--dark);color:var(--cream);padding:0;">
 
@@ -899,14 +1135,6 @@ footer.pp-footer {
 
 
 
-
-<div class="act-divider on-dark">
-  <div class="act-divider-inner">
-    <span class="act-roman">Act III</span>
-    <span class="act-x">×</span>
-    <span>The Slate</span>
-  </div>
-</div>
 
 <section id="caddy" class="caddy-stage-wrap">
   <div class="caddy-stage">
@@ -1026,14 +1254,6 @@ footer.pp-footer {
 
 <!-- MOODBOARD -->
 
-
-<div class="act-divider on-dark">
-  <div class="act-divider-inner">
-    <span class="act-roman">Act IV</span>
-    <span class="act-x">×</span>
-    <span>The Business</span>
-  </div>
-</div>
 
 <section id="casting" style="background: var(--dark); color: var(--cream); padding: 120px 0;">
   <div class="container">
@@ -1228,7 +1448,7 @@ footer.pp-footer {
 
     <!-- BIBLIOGRAPHY · BUSINESS CASE -->
     <div class="reveal" style="margin-top:64px;padding:40px 48px;border-top:1px solid rgba(245,240,232,0.12);">
-      <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;">Sources · Fact-Check Index</div>
+      <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;">Sources</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 40px;font-family:'DM Mono',monospace;font-size:11px;line-height:1.7;color:rgba(245,240,232,0.55);">
         <div>01 · National Golf Foundation, <em>2025 U.S. Golf Participation Report</em>. <a href="https://www.ngf.org/golf-industry-research/" target="_blank" style="color:var(--gold-light);text-decoration:none;">ngf.org</a></div>
         <div>02 · Deloitte, <em>Digital Media Trends 2026: Short-Form Video</em>. <a href="https://www2.deloitte.com/us/en/insights/industry/technology/digital-media-trends-consumption-habits-survey.html" target="_blank" style="color:var(--gold-light);text-decoration:none;">deloitte.com</a></div>
@@ -1239,7 +1459,6 @@ footer.pp-footer {
         <div>07 · Sports Business Journal, <em>Good Good Golf Funding Round</em>, July 2025. <a href="https://www.sportsbusinessjournal.com/" target="_blank" style="color:var(--gold-light);text-decoration:none;">sportsbusinessjournal.com</a></div>
         <div>08 · Golfweek, <em>Good Good × Omaha Productions PGA Tour Title Sponsorship</em>, 2025. <a href="https://golfweek.usatoday.com/" target="_blank" style="color:var(--gold-light);text-decoration:none;">golfweek.usatoday.com</a></div>
       </div>
-      <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.18em;color:rgba(245,240,232,0.3);margin-top:24px;font-style:italic;">Figures cross-referenced against cited publications as of Q1 2026. Verify individual metrics before external use.</div>
     </div>
 
     </div>
@@ -1473,28 +1692,17 @@ new Chart(eCtx, {
 
     <!-- BIBLIOGRAPHY · BRAND INTEGRATION -->
     <div class="reveal" style="margin-top:64px;padding:40px 0 0;border-top:1px solid var(--rule);">
-      <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;">Sources · Fact-Check Index</div>
+      <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;">Sources</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 40px;font-family:'DM Mono',monospace;font-size:11px;line-height:1.7;color:var(--muted);">
         <div>01 · IEG / SponsorUnited, <em>Global Golf Sponsorship Market 2025</em>. <a href="https://www.sponsorunited.com/" target="_blank" style="color:var(--green);text-decoration:none;">sponsorunited.com</a></div>
         <div>02 · Nielsen Sports, <em>ROI on Golf Sponsorship Activation 2024</em>. <a href="https://www.nielsen.com/solutions/sports-and-entertainment/" target="_blank" style="color:var(--green);text-decoration:none;">nielsen.com</a></div>
         <div>03 · National Golf Foundation, <em>2025 U.S. Participation Report</em>. <a href="https://www.ngf.org/golf-industry-research/" target="_blank" style="color:var(--green);text-decoration:none;">ngf.org</a></div>
         <div>04 · Acquia / Golfer Demographics, <em>Average Household Income by Participation</em>. <a href="https://www.ngf.org/the-demographics-of-u-s-golf-participation/" target="_blank" style="color:var(--green);text-decoration:none;">ngf.org</a></div>
       </div>
-      <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.18em;color:var(--muted);margin-top:24px;font-style:italic;">All brand integration figures cross-referenced against cited publications as of Q1 2026.</div>
     </div>
 
   </div>
 </section>
-
-<div class="act-divider">
-  <div class="act-divider-inner">
-    <span class="act-roman">End</span>
-    <span class="act-x">×</span>
-    <span>Credits</span>
-  </div>
-</div>
-
-
 
 <!-- TEAM SECTION -->
 <section id="team" style="background: var(--cream); padding: 120px 0;">
@@ -1511,8 +1719,8 @@ new Chart(eCtx, {
         </div>
         <div style="padding:24px 0 0;">
           <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--dark);margin-bottom:4px;">Jacob Wahba</div>
-          <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);">Creator · Director</div>
-          <div style="font-size:13px;line-height:1.6;color:var(--muted);margin-top:14px;padding-top:14px;border-top:1px solid var(--rule);">NYC-based director and producer working across theatrical and social-first branded content. Dynamic, kinetic visual style. Credits include Dior, Nike, Brooks Brothers, GEICO, <em>Only Murders in the Building</em>, and Broadway.</div>
+          <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);">Director · Producer</div>
+          <div style="font-size:13px;line-height:1.6;color:var(--muted);margin-top:14px;padding-top:14px;border-top:1px solid var(--rule);">NYC-based director and producer. Credits: Dior, Nike, Brooks Brothers, GEICO, <em>Only Murders in the Building</em>, Broadway.</div>
         </div>
       </div>
 
@@ -1523,7 +1731,7 @@ new Chart(eCtx, {
         <div style="padding:24px 0 0;">
           <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--dark);margin-bottom:4px;">Frankie Seratch</div>
           <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);">Producer · Creator</div>
-          <div style="font-size:13px;line-height:1.6;color:var(--muted);margin-top:14px;padding-top:14px;border-top:1px solid var(--rule);">Producer building Pebble Pines from pitch deck to pilot. Runs the operation between the tee box and the edit bay. <em>[edit your own bio here, Frankie]</em></div>
+          <div style="font-size:13px;line-height:1.6;color:var(--muted);margin-top:14px;padding-top:14px;border-top:1px solid var(--rule);">Producer and creator. Multi-hyphenate. Tribeca feature, 2026.</div>
         </div>
       </div>
 
@@ -1533,8 +1741,8 @@ new Chart(eCtx, {
         </div>
         <div style="padding:24px 0 0;">
           <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--dark);margin-bottom:4px;">Jack Reichert</div>
-          <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);">Creator · Comedian</div>
-          <div style="font-size:13px;line-height:1.6;color:var(--muted);margin-top:14px;padding-top:14px;border-top:1px solid var(--rule);">Comedian working in short-form. Finds the joke in any room, which, on a golf course, is most rooms. Writes the line three holes before anyone else sees it.</div>
+          <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);">Comedian · Writer</div>
+          <div style="font-size:13px;line-height:1.6;color:var(--muted);margin-top:14px;padding-top:14px;border-top:1px solid var(--rule);">Comedian. Short-form writer and performer.</div>
         </div>
       </div>
 
@@ -1544,8 +1752,8 @@ new Chart(eCtx, {
         </div>
         <div style="padding:24px 0 0;">
           <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--dark);margin-bottom:4px;">Evan Frolov</div>
-          <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);">Creator · Cinematographer</div>
-          <div style="font-size:13px;line-height:1.6;color:var(--muted);margin-top:14px;padding-top:14px;border-top:1px solid var(--rule);">NYC-based content creator. Specializes in cinematic storytelling, engaging work that highlights people, culture, and internet-driven creativity. Makes a pitching wedge look like a dolly shot.</div>
+          <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);">Cinematographer · Creator</div>
+          <div style="font-size:13px;line-height:1.6;color:var(--muted);margin-top:14px;padding-top:14px;border-top:1px solid var(--rule);">NYC-based cinematographer and content creator. Cinematic storytelling across people, culture, and the internet.</div>
         </div>
       </div>
 
