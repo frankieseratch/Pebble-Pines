@@ -296,7 +296,7 @@
 
   /* CONTAINERS */
   .container { padding: 0 20px; }
-  section { padding: 72px 0; }
+  section { padding: 32px 0; }
 
   /* CONCEPT */
   .concept-grid { grid-template-columns: 1fr; gap: 40px; }
@@ -775,13 +775,15 @@ footer.pp-footer {
 .splash {
   position: relative;
   min-height: 100vh;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   color: var(--cream);
   text-align: center;
-  padding: 120px 40px 200px;
+  padding: 80px 40px 150px;
+  box-sizing: border-box;
 }
 .splash-bg {
   position: absolute; inset: 0;
@@ -842,7 +844,7 @@ footer.pp-footer {
 }
 .splash-title {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(72px, 12vw, 168px);
+  font-size: clamp(64px, 9vw, 128px);
   font-weight: 400;
   font-style: italic;
   line-height: 0.94;
@@ -980,10 +982,10 @@ footer.pp-footer {
   overflow: visible;
   display: block;
 }
-.ball-hole-anim svg { width: 100%; height: 100%; overflow: visible; display: block; }
-/* Show desktop SVG by default, hide mobile */
-.ball-svg-mobile { display: none; }
-.ball-svg-desktop { display: block; }
+.ball-hole-anim svg { width: 100%; height: 100%; overflow: visible; }
+/* Show desktop SVG by default, hide mobile (specific selectors so .ball-hole-anim svg can't override) */
+.ball-hole-anim .ball-svg-mobile { display: none !important; }
+.ball-hole-anim .ball-svg-desktop { display: block !important; }
 .golf-ball {
   animation: ball-roll 7s cubic-bezier(0.33, 0.02, 0.68, 0.53) infinite;
 }
@@ -1039,13 +1041,10 @@ footer.pp-footer {
   82%  { transform: translateX(698px) scale(0); opacity: 0; }
   100% { transform: translateX(698px) scale(0); opacity: 0; }
 }
-.flag {
-  transform-origin: 720px 22px;
-  animation: flag-wave 2.6s ease-in-out infinite;
-}
-@keyframes flag-wave {
-  0%, 100% { transform: skewY(0deg) scaleX(1); }
-  50%      { transform: skewY(-3deg) scaleX(0.92); }
+.flag, .flag-mobile, svg .flag, svg .flag-mobile, .ball-svg-mobile .flag-mobile, .ball-svg-desktop .flag {
+  animation: none !important;
+  transform: none !important;
+  transform-origin: 50% 50% !important;
 }
 .scroll-label {
   font-family: 'DM Mono', monospace;
@@ -1141,34 +1140,43 @@ footer.pp-footer {
   .splash-meta-label { font-size: 8px; letter-spacing: 0.35em; }
   .splash-sub { font-size: 8px; letter-spacing: 0.3em; line-height: 1.5; max-width: 100%; padding: 0 8px; }
 
-  /* === PHOTO STRIP — quick-swap carousel with arrows === */
-  .strip-wrap { padding: 24px 0 0; }
-  .strip-caption { font-size: 10px; letter-spacing: 0.42em; margin-bottom: 12px; padding: 0 20px; }
+  /* === PHOTO STRIP — opacity quick-swap carousel === */
+  .strip-wrap { padding: 16px 0 0; }
+  .strip-caption { font-size: 10px; letter-spacing: 0.42em; margin-bottom: 10px; padding: 0 20px; }
   .strip-carousel {
     position: relative;
     overflow: hidden;
     width: 100vw;
+    aspect-ratio: 4/5;
     background: #1a1a14;
   }
   .photo-strip {
-    display: flex !important;
-    flex-wrap: nowrap !important;
+    display: block !important;
     grid-template-columns: none !important;
-    width: 400% !important;
+    width: 100% !important;
+    height: 100% !important;
     gap: 0 !important;
     padding: 0 !important;
     background: transparent !important;
     animation: none !important;
-    transition: transform 0.55s cubic-bezier(0.7, 0.05, 0.3, 0.95);
-    will-change: transform;
+    transition: none !important;
+    transform: none !important;
+    position: relative;
   }
   .strip-item {
-    flex: 0 0 25% !important;
-    width: 25% !important;
-    aspect-ratio: 4/5 !important;
+    position: absolute !important;
+    inset: 0 !important;
+    flex: none !important;
+    width: 100% !important;
+    height: 100% !important;
+    aspect-ratio: auto !important;
     background: #1a1a14;
     overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.22s ease;
+    pointer-events: none;
   }
+  .strip-item.active { opacity: 1; pointer-events: auto; }
   .strip-item img {
     width: 100%;
     height: 100%;
@@ -1178,7 +1186,7 @@ footer.pp-footer {
   }
 
   /* === CONCEPT === */
-  #concept { padding: 64px 0; }
+  #concept { padding: 20px 0 18px !important; }
   .concept-grid { grid-template-columns: 1fr; gap: 40px; display: flex; flex-direction: column; }
   /* Photo AFTER copy on mobile */
   .concept-text { order: 1; }
@@ -1191,8 +1199,8 @@ footer.pp-footer {
   .concept-bg { opacity: 0.34; }
 
   /* === STYLE & TONE === */
-  #style { padding: 64px 0 0; }
-  .vl-block { padding: 32px 0 56px; max-width: 100vw; }
+  #style { padding: 18px 0 0 !important; }
+  .vl-block { padding: 18px 0 24px !important; max-width: 100vw; }
   .vl-header { padding: 0 24px; margin-bottom: 36px; }
   .vl-label { font-size: 10px; letter-spacing: 0.42em; margin-bottom: 18px; }
   .vl-heading { font-size: clamp(40px, 11vw, 60px); line-height: 1.02; }
@@ -1226,7 +1234,7 @@ footer.pp-footer {
   .group-num { font-size: 9px; letter-spacing: 0.2em; }
 
   /* === EPISODES === */
-  #episodes { padding: 28px 0 36px !important; }
+  #episodes { padding: 18px 0 18px !important; }
   #episodes .container { padding: 0 20px; }
   #episodes .section-label { margin-bottom: 8px !important; }
   #episodes .section-title { font-size: clamp(28px, 8vw, 42px) !important; margin-bottom: 18px !important; line-height: 1.05 !important; }
@@ -1250,7 +1258,7 @@ footer.pp-footer {
   #brand-case .container { padding: 0 20px; }
 
   /* === BRANDS === */
-  #brands { padding: 28px 0 36px !important; }
+  #brands { padding: 18px 0 24px !important; }
   #brands > .container { padding: 0 20px; }
   #brands > .container > .reveal[style*="grid-template-columns"] { grid-template-columns: 1fr !important; gap: 24px !important; margin-bottom: 24px !important; }
   /* Brand cards: 3 across (was 2) */
@@ -1276,9 +1284,9 @@ footer.pp-footer {
   .scroll-label { font-size: 9px; letter-spacing: 0.4em; }
 
   /* === Section + type === */
-  section { padding: 70px 0; }
-  .section-title { font-size: clamp(28px, 7vw, 40px); margin-bottom: 36px; }
-  .section-label { font-size: 9px; letter-spacing: 0.3em; }
+  section { padding: 32px 0 !important; }
+  .section-title { font-size: clamp(28px, 7vw, 40px); margin-bottom: 20px; }
+  .section-label { font-size: 9px; letter-spacing: 0.3em; margin-bottom: 8px; }
   body { font-size: 16px; }
 }
 
@@ -1321,7 +1329,7 @@ footer.pp-footer {
   .groups-grid { padding: 0 !important; }
 
   /* CASTING — kill the gap */
-  #casting { padding: 28px 0 24px !important; }
+  #casting { padding: 18px 0 18px !important; }
   #casting .container { padding: 0 20px !important; }
   #casting > .container > .reveal:first-child h2 { font-size: clamp(30px, 8vw, 44px) !important; margin-bottom: 10px !important; line-height: 1.05 !important; }
   #casting > .container > .reveal:first-child p { font-size: 15px !important; line-height: 1.6 !important; margin-bottom: 22px !important; }
@@ -1344,8 +1352,8 @@ footer.pp-footer {
   #brands h2 { font-size: clamp(28px, 8vw, 42px) !important; line-height: 1.05 !important; }
 
   /* BALL SVG: switch to mobile-round version */
-  .ball-svg-desktop { display: none !important; }
-  .ball-svg-mobile { display: block !important; }
+  .ball-hole-anim .ball-svg-desktop { display: none !important; }
+  .ball-hole-anim .ball-svg-mobile { display: block !important; }
 
   /* CHARACTER PHOTOS: shift Boomers down (less headspace), give PP a small headspace */
   .group-card:nth-child(2) .group-photo img { object-position: center 42% !important; }
@@ -1358,35 +1366,41 @@ footer.pp-footer {
   .cast-names .handle { font-size: 8.5px !important; letter-spacing: 0.04em !important; word-break: break-all; }
   .cast-pillar { padding: 28px 20px 24px !important; }
 
-  /* SOURCES: rectangle card carousel with arrow navigation */
-  .sources-block { position: relative !important; padding: 22px 16px !important; margin: 24px 0 0 !important; border-top: none !important; border: 1px solid rgba(245,240,232,0.2) !important; background: rgba(245,240,232,0.04) !important; overflow: hidden; }
+  /* SOURCES: rectangle card carousel — opacity quick-swap === */
+  .sources-block { position: relative !important; padding: 18px 16px !important; margin: 18px 0 0 !important; border-top: none !important; border: 1px solid rgba(245,240,232,0.2) !important; background: rgba(245,240,232,0.04) !important; overflow: hidden; }
   .sources-block.sources-light { border: 1px solid var(--rule) !important; background: rgba(255,255,255,0.5) !important; }
-  .sources-block > div:first-child { margin-bottom: 14px !important; padding-right: 80px; }
+  .sources-block > div:first-child { margin-bottom: 12px !important; padding-right: 90px; }
   .sources-track {
-    display: flex !important;
-    flex-wrap: nowrap !important;
+    display: block !important;
     grid-template-columns: none !important;
     gap: 0 !important;
     width: 100% !important;
-    transition: transform 0.45s cubic-bezier(0.7, 0.05, 0.3, 0.95);
-    will-change: transform;
+    position: relative !important;
+    min-height: 78px !important;
+    transition: none !important;
+    transform: none !important;
   }
   .sources-track > div {
-    flex: 0 0 100% !important;
+    position: absolute !important;
+    inset: 0 !important;
+    flex: none !important;
     width: 100% !important;
     white-space: normal !important;
     font-size: 12px !important;
     line-height: 1.55 !important;
-    padding: 4px 56px 4px 0 !important;
-    min-height: 70px !important;
+    padding: 4px 0 !important;
     display: flex !important;
     align-items: center !important;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
   }
+  .sources-track > div.active { opacity: 1; pointer-events: auto; }
 
   /* TEAM "Who We Are": tighten bottom gap */
-  #team { padding: 56px 0 32px !important; }
-  #team h2 { margin-bottom: 32px !important; font-size: clamp(28px, 8vw, 42px) !important; }
-  footer.pp-footer { padding: 36px 24px 28px !important; }
+  #team { padding: 24px 0 18px !important; }
+  #team h2 { margin-bottom: 18px !important; font-size: clamp(28px, 8vw, 42px) !important; }
+  footer.pp-footer { padding: 24px 24px 22px !important; }
 
   /* === FIELD NOTES analytics: compact mobile === */
   /* 4-stat row: 2x2, smaller numbers */
@@ -1564,24 +1578,25 @@ footer.pp-footer {
         </g>
       </svg>
       <!-- Desktop SVG (squashed wide) -->
-      <svg class="ball-svg-desktop" viewBox="0 0 1200 130" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="none">
+      <svg class="ball-svg-desktop" viewBox="0 0 1200 140" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="none">
         <!-- green baseline, far left to far right -->
-        <line x1="0" y1="108" x2="1200" y2="108" stroke="rgba(184,150,62,0.28)" stroke-width="1" stroke-dasharray="4 5"/>
-        <!-- hole, more centered -->
-        <ellipse class="hole" cx="720" cy="108" rx="22" ry="6" fill="#000"/>
+        <line x1="0" y1="108" x2="1200" y2="108" stroke="rgba(184,150,62,0.32)" stroke-width="1.2" stroke-dasharray="4 5"/>
+        <!-- hole -->
+        <ellipse class="hole" cx="720" cy="108" rx="20" ry="5" fill="#000"/>
         <!-- flag pole -->
-        <line class="flag-pole" x1="720" y1="108" x2="720" y2="14" stroke="rgba(245,240,232,0.92)" stroke-width="2"/>
-        <!-- flag -->
-        <path class="flag" d="M 720 14 L 764 22 L 720 30 Z" fill="#B8963E"/>
+        <line class="flag-pole" x1="720" y1="108" x2="720" y2="36" stroke="rgba(245,240,232,0.95)" stroke-width="1.8"/>
+        <!-- flag (still, no animation) -->
+        <path class="flag" d="M 720 36 L 752 44 L 720 52 Z" fill="#B8963E" stroke="#9c7d2c" stroke-width="0.5"/>
         <!-- ball shadow -->
-        <ellipse class="ball-shadow" cx="22" cy="115" rx="13" ry="3" fill="rgba(0,0,0,0.4)"/>
-        <!-- golf ball -->
+        <ellipse class="ball-shadow" cx="22" cy="114" rx="12" ry="2.6" fill="rgba(0,0,0,0.42)"/>
+        <!-- golf ball, round and defined -->
         <g class="golf-ball">
-          <circle cx="22" cy="98" r="11" fill="#F5F0E8"/>
-          <circle cx="19" cy="95" r="1.2" fill="rgba(0,0,0,0.18)"/>
-          <circle cx="24" cy="97" r="1.2" fill="rgba(0,0,0,0.18)"/>
-          <circle cx="22" cy="100" r="1.2" fill="rgba(0,0,0,0.18)"/>
-          <circle cx="20" cy="100" r="0.9" fill="rgba(0,0,0,0.18)"/>
+          <circle cx="22" cy="96" r="13" fill="#F5F0E8" stroke="#c9c0a8" stroke-width="0.8"/>
+          <circle cx="19" cy="93" r="1.4" fill="rgba(0,0,0,0.2)"/>
+          <circle cx="24" cy="94" r="1.4" fill="rgba(0,0,0,0.2)"/>
+          <circle cx="26" cy="98" r="1.2" fill="rgba(0,0,0,0.2)"/>
+          <circle cx="20" cy="100" r="1.2" fill="rgba(0,0,0,0.2)"/>
+          <circle cx="22" cy="97" r="1.2" fill="rgba(0,0,0,0.2)"/>
         </g>
       </svg>
     </div>
@@ -1599,8 +1614,8 @@ footer.pp-footer {
       <div class="strip-item"><img src="images/strip-3.jpg" alt="" style="object-position: center 50%;"></div>
       <div class="strip-item"><img src="images/strip-4.jpg" alt="" style="object-position: center 45%;"></div>
     </div>
-    <button class="carousel-arrow carousel-prev" data-dir="prev" aria-label="Previous photo">‹</button>
-    <button class="carousel-arrow carousel-next" data-dir="next" aria-label="Next photo">›</button>
+    <button class="carousel-arrow carousel-prev" data-dir="prev" aria-label="Previous photo">◀</button>
+    <button class="carousel-arrow carousel-next" data-dir="next" aria-label="Next photo">▶</button>
   </div>
 </div>
 
@@ -2073,8 +2088,8 @@ footer.pp-footer {
         <div>07 · Sports Business Journal, <em>Good Good Golf Funding Round</em>, July 2025. <a href="https://www.sportsbusinessjournal.com/" target="_blank" style="color:var(--gold-light);text-decoration:none;">sportsbusinessjournal.com</a></div>
         <div>08 · Golfweek, <em>Good Good × Omaha Productions PGA Tour Title Sponsorship</em>, 2025. <a href="https://golfweek.usatoday.com/" target="_blank" style="color:var(--gold-light);text-decoration:none;">golfweek.usatoday.com</a></div>
       </div>
-      <button class="carousel-arrow carousel-prev sources-arrow" data-dir="prev" aria-label="Previous source">‹</button>
-      <button class="carousel-arrow carousel-next sources-arrow" data-dir="next" aria-label="Next source">›</button>
+      <button class="carousel-arrow carousel-prev sources-arrow" data-dir="prev" aria-label="Previous source">◀</button>
+      <button class="carousel-arrow carousel-next sources-arrow" data-dir="next" aria-label="Next source">▶</button>
     </div>
 
     </div>
@@ -2315,8 +2330,8 @@ new Chart(eCtx, {
         <div>03 · National Golf Foundation, <em>2025 U.S. Participation Report</em>. <a href="https://www.ngf.org/golf-industry-research/" target="_blank" style="color:var(--green);text-decoration:none;">ngf.org</a></div>
         <div>04 · Acquia / Golfer Demographics, <em>Average Household Income by Participation</em>. <a href="https://www.ngf.org/the-demographics-of-u-s-golf-participation/" target="_blank" style="color:var(--green);text-decoration:none;">ngf.org</a></div>
       </div>
-      <button class="carousel-arrow carousel-prev sources-arrow sources-arrow-light" data-dir="prev" aria-label="Previous source">‹</button>
-      <button class="carousel-arrow carousel-next sources-arrow sources-arrow-light" data-dir="next" aria-label="Next source">›</button>
+      <button class="carousel-arrow carousel-prev sources-arrow sources-arrow-light" data-dir="prev" aria-label="Previous source">◀</button>
+      <button class="carousel-arrow carousel-next sources-arrow sources-arrow-light" data-dir="next" aria-label="Next source">▶</button>
     </div>
 
   </div>
@@ -2394,73 +2409,53 @@ new Chart(eCtx, {
   }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
   reveals.forEach(el => obs.observe(el));
 
-  // ===== Mobile carousels (Visual Reference + Sources) =====
+  // ===== Mobile carousels — opacity quick-swap with arrows =====
+  function makeQuickSwapCarousel(wrap, trackSelector, opts) {
+    opts = opts || {};
+    const track = wrap.querySelector(trackSelector);
+    if (!track) return;
+    const slides = Array.from(track.children).filter(c => !c.classList.contains('carousel-arrow'));
+    if (slides.length === 0) return;
+    const total = slides.length;
+    const interval = opts.interval || 3500;
+    const resumeDelay = opts.resumeDelay || 5500;
+    let idx = 0;
+
+    function setActive(n) {
+      idx = ((n % total) + total) % total;
+      slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+    }
+    setActive(0);
+
+    let timer = setInterval(() => setActive(idx + 1), interval);
+    const reset = () => { clearInterval(timer); timer = setInterval(() => setActive(idx + 1), resumeDelay); };
+
+    wrap.querySelectorAll('.carousel-arrow').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        setActive(idx + (btn.dataset.dir === 'next' ? 1 : -1));
+        reset();
+      });
+    });
+
+    // Touch swipe support on the visible stage
+    const stage = wrap.querySelector('.strip-carousel') || track;
+    let startX = 0, isDown = false;
+    stage.addEventListener('touchstart', e => { startX = e.touches[0].clientX; isDown = true; clearInterval(timer); }, { passive: true });
+    stage.addEventListener('touchend', e => {
+      if (!isDown) return;
+      isDown = false;
+      const dx = e.changedTouches[0].clientX - startX;
+      if (dx > 40) setActive(idx - 1);
+      else if (dx < -40) setActive(idx + 1);
+      reset();
+    }, { passive: true });
+  }
+
   function initCarousels() {
     if (window.innerWidth > 768) return; // mobile only
-
-    // PHOTO STRIP carousel
-    document.querySelectorAll('[data-carousel="photos"]').forEach(wrap => {
-      const track = wrap.querySelector('.photo-strip');
-      const slides = track ? track.children : [];
-      if (!track || slides.length === 0) return;
-      let idx = 0;
-      const total = slides.length;
-      const advance = (delta = 1) => {
-        idx = (idx + delta + total) % total;
-        track.style.transform = `translateX(-${idx * (100 / total)}%)`;
-      };
-      let timer = setInterval(() => advance(1), 3500);
-      const reset = () => { clearInterval(timer); timer = setInterval(() => advance(1), 4500); };
-      wrap.querySelectorAll('.carousel-arrow').forEach(btn => {
-        btn.addEventListener('click', () => {
-          advance(btn.dataset.dir === 'next' ? 1 : -1);
-          reset();
-        });
-      });
-      // Touch swipe
-      let startX = 0, isDown = false;
-      track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; isDown = true; clearInterval(timer); }, { passive: true });
-      track.addEventListener('touchend', e => {
-        if (!isDown) return;
-        isDown = false;
-        const dx = e.changedTouches[0].clientX - startX;
-        if (dx > 40) advance(-1);
-        else if (dx < -40) advance(1);
-        reset();
-      }, { passive: true });
-    });
-
-    // SOURCES carousels
-    document.querySelectorAll('[data-carousel="sources"]').forEach(wrap => {
-      const track = wrap.querySelector('.sources-track');
-      const slides = track ? track.children : [];
-      if (!track || slides.length === 0) return;
-      let idx = 0;
-      const total = slides.length;
-      const advance = (delta = 1) => {
-        idx = (idx + delta + total) % total;
-        track.style.transform = `translateX(-${idx * 100}%)`;
-      };
-      let timer = setInterval(() => advance(1), 4000);
-      const reset = () => { clearInterval(timer); timer = setInterval(() => advance(1), 6000); };
-      wrap.querySelectorAll('.carousel-arrow').forEach(btn => {
-        btn.addEventListener('click', () => {
-          advance(btn.dataset.dir === 'next' ? 1 : -1);
-          reset();
-        });
-      });
-      // Touch swipe
-      let startX = 0, isDown = false;
-      track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; isDown = true; clearInterval(timer); }, { passive: true });
-      track.addEventListener('touchend', e => {
-        if (!isDown) return;
-        isDown = false;
-        const dx = e.changedTouches[0].clientX - startX;
-        if (dx > 30) advance(-1);
-        else if (dx < -30) advance(1);
-        reset();
-      }, { passive: true });
-    });
+    document.querySelectorAll('[data-carousel="photos"]').forEach(w => makeQuickSwapCarousel(w, '.photo-strip', { interval: 3000, resumeDelay: 5500 }));
+    document.querySelectorAll('[data-carousel="sources"]').forEach(w => makeQuickSwapCarousel(w, '.sources-track', { interval: 3500, resumeDelay: 6000 }));
   }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initCarousels);
