@@ -1140,15 +1140,16 @@ footer.pp-footer {
   .splash-meta-label { font-size: 8px; letter-spacing: 0.35em; }
   .splash-sub { font-size: 8px; letter-spacing: 0.3em; line-height: 1.5; max-width: 100%; padding: 0 8px; }
 
-  /* === PHOTO STRIP — opacity quick-swap carousel === */
-  .strip-wrap { padding: 16px 0 0; }
+  /* === PHOTO STRIP — opacity quick-swap carousel, full-bleed === */
+  .strip-wrap { padding: 14px 0 0; }
   .strip-caption { font-size: 10px; letter-spacing: 0.42em; margin-bottom: 10px; padding: 0 20px; }
   .strip-carousel {
     position: relative;
     overflow: hidden;
     width: 100vw;
-    aspect-ratio: 4/5;
-    background: #1a1a14;
+    /* Tall portrait container that matches phone screen proportions and the source photos' natural aspect */
+    aspect-ratio: 3/4;
+    background: #0d0d0a;
   }
   .photo-strip {
     display: block !important;
@@ -1161,7 +1162,8 @@ footer.pp-footer {
     animation: none !important;
     transition: none !important;
     transform: none !important;
-    position: relative;
+    position: absolute !important;
+    inset: 0 !important;
   }
   .strip-item {
     position: absolute !important;
@@ -1170,7 +1172,7 @@ footer.pp-footer {
     width: 100% !important;
     height: 100% !important;
     aspect-ratio: auto !important;
-    background: #1a1a14;
+    background: #0d0d0a;
     overflow: hidden;
     opacity: 0;
     transition: opacity 0.22s ease;
@@ -1178,12 +1180,17 @@ footer.pp-footer {
   }
   .strip-item.active { opacity: 1; pointer-events: auto; }
   .strip-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center center !important;
-    background: #1a1a14;
+    width: 100% !important;
+    height: 100% !important;
+    /* COVER fills the entire section; per-image object-position frames the subject */
+    object-fit: cover !important;
+    background: #0d0d0a;
   }
+  /* Per-image framing so subjects stay in shot */
+  .strip-carousel .strip-item:nth-child(1) img { object-position: center 65% !important; }
+  .strip-carousel .strip-item:nth-child(2) img { object-position: center 60% !important; }
+  .strip-carousel .strip-item:nth-child(3) img { object-position: 30% center !important; }
+  .strip-carousel .strip-item:nth-child(4) img { object-position: center 40% !important; }
 
   /* === CONCEPT === */
   #concept { padding: 20px 0 18px !important; }
@@ -1200,7 +1207,9 @@ footer.pp-footer {
 
   /* === STYLE & TONE === */
   #style { padding: 18px 0 0 !important; }
-  .vl-block { padding: 18px 0 24px !important; max-width: 100vw; }
+  .vl-block { padding: 18px 0 0 !important; max-width: 100vw; margin-bottom: 0 !important; }
+  /* Mood grid sits flush against the next section (no bottom gap) */
+  .vl-mood { margin-bottom: 0 !important; }
   .vl-header { padding: 0 24px; margin-bottom: 36px; }
   .vl-label { font-size: 10px; letter-spacing: 0.42em; margin-bottom: 18px; }
   .vl-heading { font-size: clamp(40px, 11vw, 60px); line-height: 1.02; }
@@ -1308,24 +1317,30 @@ footer.pp-footer {
   div[style*="grid-template-columns:1fr auto 1fr"] {
     display: grid !important;
     grid-template-columns: 1fr auto 1fr !important;
-    gap: 4px !important;
+    gap: 6px !important;
     align-items: center !important;
-    padding: 0 8px !important;
+    padding: 0 6px !important;
   }
-  div[style*="max-width:340px"] { max-width: 110px !important; margin-bottom: 8px !important; box-shadow: 0 8px 20px rgba(0,0,0,0.5) !important; }
-  /* The big × in middle: smaller */
-  div[style*="font-size:72px"] { font-size: 22px !important; padding: 0 !important; padding-bottom: 28px !important; }
-  /* Comp poster wrappers — collapse padding */
-  div[style*="padding:0 48px 24px"] { padding: 0 !important; }
-  /* Comp titles — smaller */
-  div[style*="font-size:36px"][style*="Playfair"] { font-size: 13px !important; margin-bottom: 2px !important; line-height: 1.1 !important; }
-  div[style*="HBO · Mike White"] , div[style*="Warner Bros. · Harold Ramis"] { font-size: 7px !important; letter-spacing: 0.12em !important; line-height: 1.3 !important; }
+  /* Posters: keep the original 2:3 aspect (set inline via aspect-ratio:2/3), make them substantially larger so they read as real movie posters */
+  div[style*="max-width:340px"] {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin-bottom: 14px !important;
+    box-shadow: 0 14px 36px rgba(0,0,0,0.55) !important;
+  }
+  /* The × separator */
+  div[style*="font-size:72px"] { font-size: 28px !important; padding: 0 !important; padding-bottom: 56px !important; }
+  /* Comp poster column wrappers — let them flex to half the row */
+  div[style*="padding:0 48px 24px"] { padding: 0 4px !important; }
+  /* Comp titles — readable but proportionate */
+  div[style*="font-size:36px"][style*="Playfair"] { font-size: 16px !important; margin-bottom: 3px !important; line-height: 1.1 !important; letter-spacing: -0.01em !important; }
+  div[style*="HBO · Mike White"] , div[style*="Warner Bros. · Harold Ramis"] { font-size: 8px !important; letter-spacing: 0.16em !important; line-height: 1.3 !important; }
 
-  /* MEET YOUR PLAYING PARTNERS — almost no gap above the grid */
-  #characters .chars-header, #characters > div:first-child { padding: 12px 20px 8px !important; }
+  /* MEET YOUR PLAYING PARTNERS — flush with Style & Tone above */
+  #characters { padding: 0 !important; margin-top: 0 !important; }
+  #characters .chars-header, #characters > div:first-child { padding: 16px 20px 10px !important; margin-top: 0 !important; }
   #characters > div:first-child h2 { font-size: clamp(30px, 8vw, 42px) !important; line-height: 1.05 !important; margin-bottom: 0 !important; }
   #characters > div:first-child > div:first-child > div:first-child { margin-bottom: 6px !important; }
-  #characters { padding: 0 !important; }
   .groups-grid { padding: 0 !important; }
 
   /* CASTING — kill the gap */
@@ -1423,12 +1438,22 @@ footer.pp-footer {
   #brand-case div[style*="grid-template-columns:1.4fr 1fr"] div[style*="display:flex;flex-direction:column;gap:20px"] > div > div[style*="letter-spacing:0.15em"] { font-size: 7px !important; letter-spacing: 0.04em !important; margin-top: 4px !important; line-height: 1.3 !important; }
   #brand-case div[style*="grid-template-columns:1.4fr 1fr"] div[style*="display:flex;flex-direction:column;gap:20px"] > div > div[style*="font-style:italic;color:rgba(245,240,232,0.35)"] { display: none !important; }
 
-  /* Charts row 2: side-by-side Creator Rev + Creator vs Traditional */
-  #brand-case div[style*="grid-template-columns:1fr 1.4fr"] { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 2px !important; }
-  #brand-case div[style*="grid-template-columns:1fr 1.4fr"] > div { padding: 18px 12px !important; }
-  #brand-case div[style*="grid-template-columns:1fr 1.4fr"] > div > div[style*="height:220px"] { height: 120px !important; }
-  #brand-case div[style*="grid-template-columns:1fr 1.4fr"] > div > div[style*="height:260px"] { height: 140px !important; }
-  #brand-case div[style*="grid-template-columns:1fr 1.4fr"] > div > div[style*="display:flex;flex-direction:column;gap:10px;margin-top:16px"] > div span { font-size: 8px !important; letter-spacing: 0.04em !important; }
+  /* Charts row 2: stack vertically — each chart gets full width, no cut-off */
+  #brand-case div[style*="grid-template-columns:1fr 1.4fr"] {
+    display: flex !important;
+    flex-direction: column !important;
+    grid-template-columns: none !important;
+    gap: 2px !important;
+  }
+  #brand-case div[style*="grid-template-columns:1fr 1.4fr"] > div { padding: 26px 18px !important; width: 100% !important; }
+  /* Donut chart: roomier */
+  #brand-case div[style*="grid-template-columns:1fr 1.4fr"] > div > div[style*="height:220px"] { height: 200px !important; }
+  /* Bar chart: roomier — fully visible, not squished */
+  #brand-case div[style*="grid-template-columns:1fr 1.4fr"] > div > div[style*="height:260px"] { height: 240px !important; }
+  /* Donut legend */
+  #brand-case div[style*="grid-template-columns:1fr 1.4fr"] > div > div[style*="display:flex;flex-direction:column;gap:10px;margin-top:16px"] > div span { font-size: 10px !important; letter-spacing: 0.06em !important; }
+  /* Ensure canvas can take full width */
+  #brand-case div[style*="grid-template-columns:1fr 1.4fr"] canvas { max-width: 100% !important; width: 100% !important; }
 
   /* Chart labels (titles + sources) on both rows */
   #brand-case div[style*="grid-template-columns:1.4fr 1fr"] div[style*="font-size:26px"],
@@ -1437,7 +1462,7 @@ footer.pp-footer {
   #brand-case div[style*="grid-template-columns:1fr 1.4fr"] div[style*="font-size:13px;color:rgba(245,240,232,0.45)"] { font-size: 10px !important; margin-bottom: 14px !important; line-height: 1.4 !important; }
   #brand-case div[style*="grid-template-columns:1.4fr 1fr"] div[style*="font-size:9px;letter-spacing:0.25em"],
   #brand-case div[style*="grid-template-columns:1fr 1.4fr"] div[style*="font-size:9px;letter-spacing:0.25em"] { font-size: 8px !important; letter-spacing: 0.18em !important; }
-  #brand-case canvas { max-height: 220px !important; }
+  #brand-case canvas { max-height: 260px !important; max-width: 100% !important; }
 
   /* Good Good Proof Point: 3 boxes in ONE row */
   #brand-case div[style*="border:1px solid rgba(184,150,62,0.2)"] { padding: 28px 18px !important; }
@@ -1449,17 +1474,17 @@ footer.pp-footer {
   #brand-case div[style*="border:1px solid rgba(184,150,62,0.2)"] h3 { font-size: 20px !important; margin-bottom: 12px !important; }
   #brand-case div[style*="border:1px solid rgba(184,150,62,0.2)"] p { font-size: 13.5px !important; line-height: 1.55 !important; }
 
-  /* === CAROUSEL ARROWS (mobile) === */
+  /* === CAROUSEL ARROWS — minimal, on-theme === */
   .carousel-arrow {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 38px; height: 38px;
-    background: rgba(26,26,20,0.55);
-    border: 1px solid rgba(245,240,232,0.5);
-    color: var(--cream);
+    width: 36px; height: 36px;
+    background: transparent;
+    border: none;
+    color: var(--gold-light);
     font-family: 'Playfair Display', serif;
-    font-size: 22px;
+    font-size: 18px;
     line-height: 1;
     font-weight: 300;
     cursor: pointer;
@@ -1467,26 +1492,27 @@ footer.pp-footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    transition: background 0.2s, color 0.2s;
-    padding: 0 0 3px 0;
+    transition: color 0.2s, transform 0.2s;
+    padding: 0;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.55);
+    -webkit-tap-highlight-color: transparent;
   }
-  .carousel-arrow:hover, .carousel-arrow:active { background: var(--gold); color: var(--dark); }
-  .carousel-prev { left: 12px; }
-  .carousel-next { right: 12px; }
-  /* Sources arrows: smaller, scoped within the sources rectangle */
+  .carousel-arrow:hover, .carousel-arrow:active { color: var(--gold); transform: translateY(-50%) scale(1.15); }
+  .carousel-prev { left: 8px; }
+  .carousel-next { right: 8px; }
+  /* Sources arrows — same minimalism, scoped to the rectangle's top-right */
   .sources-arrow {
-    width: 30px; height: 30px; font-size: 18px;
-    top: 18px; transform: none;
-    background: rgba(184,150,62,0.18);
-    border-color: rgba(184,150,62,0.5);
+    width: 26px; height: 26px;
+    font-size: 14px;
+    top: 16px; transform: none;
+    color: var(--gold);
+    text-shadow: none;
   }
-  .sources-arrow.carousel-prev { left: auto; right: 50px; }
-  .sources-arrow.carousel-next { right: 14px; }
-  .sources-arrow-light { background: rgba(184,150,62,0.12); border-color: rgba(44,74,46,0.4); color: var(--green); }
-  .sources-arrow-light:hover, .sources-arrow-light:active { background: var(--green); color: var(--cream); }
+  .sources-arrow:hover, .sources-arrow:active { transform: scale(1.18); color: var(--gold-light); }
+  .sources-arrow.carousel-prev { left: auto; right: 38px; }
+  .sources-arrow.carousel-next { right: 10px; }
+  .sources-arrow-light { color: var(--green); }
+  .sources-arrow-light:hover, .sources-arrow-light:active { color: var(--gold); }
 }
 
 /* Hide arrows on desktop */
