@@ -69,6 +69,14 @@
   .concept-bg-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(245,240,232,0.88) 0%, rgba(245,240,232,0.75) 40%, rgba(245,240,232,0.88) 100%); z-index: 1; }
   #concept .container { position: relative; z-index: 2; }
   .concept-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .concept-photo { position: relative; aspect-ratio: 3/4; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.18), 0 0 0 1px rgba(184,150,62,0.25); }
+  .concept-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center; transition: transform 8s ease-out; }
+  .concept-photo:hover img { transform: scale(1.04); }
+  .concept-photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0) 65%, rgba(0,0,0,0.35) 100%); pointer-events: none; }
+  .concept-photo-tag { position: absolute; bottom: 18px; left: 22px; right: 22px; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.4em; text-transform: uppercase; color: rgba(245,240,232,0.92); z-index: 2; }
+  .concept-text { display: flex; flex-direction: column; }
+  .concept-text .section-label { margin-bottom: 16px; }
+  .concept-text .section-title { margin-bottom: 36px; }
   .concept-body { font-size: 20px; line-height: 1.8; }
   .concept-body p+p { margin-top: 24px; }
   /* HERITAGE CREST */
@@ -769,46 +777,8 @@ footer.pp-footer {
   justify-content: center;
   overflow: hidden;
   color: var(--cream);
-  padding: 100px 60px 140px;
-}
-/* SPLASH GRID — photo left, content right */
-.splash-grid {
-  position: relative; z-index: 4;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: center;
-  width: 100%;
-  max-width: 1400px;
-}
-.splash-photo-col { display: flex; align-items: center; justify-content: center; }
-.splash-photo {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 3/4;
-  max-height: 78vh;
-  overflow: hidden;
-  box-shadow: 0 30px 90px rgba(0,0,0,0.5), 0 0 0 1px rgba(184,150,62,0.25);
-  opacity: 0; animation: fadeUp 1.4s 0.15s forwards;
-}
-.splash-photo img {
-  width: 100%; height: 100%;
-  object-fit: cover; object-position: center;
-  filter: saturate(1.05) contrast(1.03);
-  transition: transform 8s ease-out;
-}
-.splash-photo:hover img { transform: scale(1.04); }
-.splash-photo::after {
-  content: ''; position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0) 60%, rgba(0,0,0,0.4) 100%);
-  pointer-events: none;
-}
-.splash-photo-tag {
-  position: absolute; bottom: 18px; left: 18px; right: 18px;
-  font-family: 'DM Mono', monospace;
-  font-size: 9px; letter-spacing: 0.4em; text-transform: uppercase;
-  color: rgba(245,240,232,0.85);
-  z-index: 2;
+  text-align: center;
+  padding: 120px 40px 100px;
 }
 .splash-bg {
   position: absolute; inset: 0;
@@ -851,12 +821,9 @@ footer.pp-footer {
 .splash-frame > span::after { bottom: -1px; right: -1px; border-left: none; border-top: none; }
 .splash-content {
   position: relative; z-index: 4;
-  display: flex; flex-direction: column; align-items: flex-start;
-  text-align: left;
+  max-width: 860px;
+  display: flex; flex-direction: column; align-items: center;
 }
-/* Override center-only rules from older splash design */
-.splash-rule { justify-content: flex-start; }
-.splash-meta { justify-content: flex-start; }
 .splash-crest {
   font-family: 'DM Mono', monospace;
   font-size: 10px; letter-spacing: 0.5em; text-transform: uppercase;
@@ -1089,16 +1056,11 @@ footer.pp-footer {
 
 /* Tablets 769–1024 */
 @media (min-width: 769px) and (max-width: 1024px) {
-  .splash { padding: 90px 40px 110px; }
-  .splash-grid { grid-template-columns: 1fr; gap: 50px; }
-  .splash-photo { aspect-ratio: 16/10; max-height: 50vh; }
-  .splash-content { align-items: center; text-align: center; }
-  .splash-rule { justify-content: center; }
-  .splash-meta { justify-content: center; }
-  .splash-title { font-size: clamp(70px, 10vw, 110px); text-align: center; }
+  .splash { padding: 100px 32px 90px; }
+  .splash-title { font-size: clamp(70px, 10vw, 110px); }
   .splash-meta { gap: 48px; }
   .concept-grid { grid-template-columns: 1fr; gap: 56px; }
-  .crest-wrap { order: -1; }
+  .concept-photo { aspect-ratio: 16/10; max-height: 56vh; }
   .vl-list { grid-template-columns: 1fr 1fr 1fr; gap: 22px; padding: 0 32px; margin-bottom: 48px; }
   .vl-mood { grid-template-columns: 1fr 1fr; gap: 3px; }
   .mood-cell { aspect-ratio: 3/4; }
@@ -1131,22 +1093,17 @@ footer.pp-footer {
   .container { padding: 0 20px; max-width: 100vw; }
 
   /* === SPLASH === */
-  .splash { padding: 80px 20px 100px; min-height: 100vh; max-width: 100vw; }
+  .splash { padding: 90px 18px 88px; min-height: 100vh; max-width: 100vw; }
   .splash-frame { inset: 12px; }
-  .splash-grid { grid-template-columns: 1fr; gap: 32px; max-width: 100%; }
-  .splash-photo { aspect-ratio: 4/5; max-height: 56vh; }
-  .splash-photo-tag { font-size: 8px; letter-spacing: 0.32em; bottom: 14px; left: 14px; right: 14px; }
-  .splash-content { padding: 0; max-width: 100%; align-items: center; text-align: center; }
-  .splash-rule { justify-content: center; }
-  .splash-meta { justify-content: center; }
-  .splash-title { font-size: clamp(52px, 15vw, 86px); line-height: 0.95; word-break: break-word; text-align: center; }
+  .splash-content { padding: 0 4px; max-width: 100%; }
+  .splash-title { font-size: clamp(52px, 15vw, 86px); line-height: 0.95; word-break: break-word; }
   .splash-crest { padding-bottom: 22px; gap: 8px; }
-  .splash-logline { font-size: 16px; line-height: 1.55; max-width: 100%; margin-bottom: 32px; text-align: center; }
-  .splash-meta { grid-template-columns: 1fr; gap: 18px; margin-bottom: 36px; text-align: center; }
-  .splash-meta-col { min-width: 0; padding-top: 14px; align-items: center; }
+  .splash-logline { font-size: 16px; line-height: 1.55; max-width: 100%; margin-bottom: 38px; }
+  .splash-meta { grid-template-columns: 1fr; gap: 22px; margin-bottom: 48px; }
+  .splash-meta-col { min-width: 0; padding-top: 14px; }
   .splash-meta-value { font-size: 14px; line-height: 1.4; }
   .splash-meta-label { font-size: 8px; letter-spacing: 0.35em; }
-  .splash-sub { font-size: 8px; letter-spacing: 0.3em; line-height: 1.5; max-width: 100%; padding: 0 8px; text-align: center; }
+  .splash-sub { font-size: 8px; letter-spacing: 0.3em; line-height: 1.5; max-width: 100%; padding: 0 8px; }
 
   /* === PHOTO STRIP — full bleed === */
   .strip-wrap { padding: 48px 0 0; }
@@ -1158,14 +1115,11 @@ footer.pp-footer {
   /* === CONCEPT === */
   #concept { padding: 64px 0; }
   .concept-grid { grid-template-columns: 1fr; gap: 36px; }
+  .concept-photo { aspect-ratio: 4/5; max-height: 60vh; }
+  .concept-photo-tag { font-size: 8px; letter-spacing: 0.32em; bottom: 14px; left: 16px; right: 16px; }
+  .concept-text .section-title { margin-bottom: 28px; }
   .concept-body { font-size: 16.5px; line-height: 1.75; }
   .concept-body p+p { margin-top: 18px; }
-  .crest-wrap { order: -1; padding: 0; }
-  .heritage-crest { padding: 32px 24px 28px; max-width: 280px; width: 100%; }
-  .crest-name { font-size: 24px; }
-  .crest-year { font-size: 8px; letter-spacing: 0.35em; }
-  .crest-sub { font-size: 9px; letter-spacing: 0.38em; }
-  .crest-clubs { width: 100px; height: 56px; }
   .concept-bg-overlay { background: linear-gradient(180deg, rgba(245,240,232,0.94) 0%, rgba(245,240,232,0.86) 50%, rgba(245,240,232,0.94) 100%); }
 
   /* === STYLE & TONE === */
@@ -1283,37 +1237,29 @@ footer.pp-footer {
   <div class="splash-overlay"></div>
   <div class="splash-letterbox-top"></div>
   <div class="splash-letterbox-bottom"></div>
+  <div class="splash-frame"><span></span></div>
 
-  <div class="splash-grid">
-    <div class="splash-photo-col">
-      <div class="splash-photo">
-        <img src="images/brand-hammock.jpg" alt="Pebble Pines · The Country Club">
-        <div class="splash-photo-tag">Members Only · Est. MMXXVI</div>
+  <div class="splash-content">
+    <div class="splash-crest">Established · Private Membership</div>
+    <h1 class="splash-title">Pebble Pines</h1>
+    <div class="splash-sub">A Series About an Exclusive Country Club</div>
+
+    <div class="splash-rule"><span class="splash-rule-mark">×</span></div>
+
+    <p class="splash-logline">"At an exclusive country club, a caddy witnesses the unhinged and entitled conversations of members who have forgotten that he has ears."</p>
+
+    <div class="splash-meta">
+      <div class="splash-meta-col">
+        <div class="splash-meta-label">Format</div>
+        <div class="splash-meta-value">Anthology Vertical Series</div>
       </div>
-    </div>
-
-    <div class="splash-content">
-      <div class="splash-crest">Established · Private Membership</div>
-      <h1 class="splash-title">Pebble Pines</h1>
-      <div class="splash-sub">A Series About an Exclusive Country Club</div>
-
-      <div class="splash-rule"><span class="splash-rule-mark">×</span></div>
-
-      <p class="splash-logline">"At an exclusive country club, a caddy witnesses the unhinged and entitled conversations of members who have forgotten that he has ears."</p>
-
-      <div class="splash-meta">
-        <div class="splash-meta-col">
-          <div class="splash-meta-label">Format</div>
-          <div class="splash-meta-value">Anthology Vertical Series</div>
-        </div>
-        <div class="splash-meta-col">
-          <div class="splash-meta-label">Tone</div>
-          <div class="splash-meta-value">Dark Comedy · Satire · Camp</div>
-        </div>
-        <div class="splash-meta-col">
-          <div class="splash-meta-label">Comp</div>
-          <div class="splash-meta-value">White Lotus × Caddyshack</div>
-        </div>
+      <div class="splash-meta-col">
+        <div class="splash-meta-label">Tone</div>
+        <div class="splash-meta-value">Dark Comedy · Satire · Camp</div>
+      </div>
+      <div class="splash-meta-col">
+        <div class="splash-meta-label">Comp</div>
+        <div class="splash-meta-value">White Lotus × Caddyshack</div>
       </div>
     </div>
   </div>
@@ -1361,37 +1307,18 @@ footer.pp-footer {
   <div class="concept-bg"></div>
   <div class="concept-bg-overlay"></div>
   <div class="container">
-    <div class="reveal">
-      <div class="section-label">The Show</div>
-      <h2 class="section-title">Tee Time 9am.<br><em style="font-style:italic;color:var(--green);">The Fairways Are Pristine.<br>The Members Are Not.</em></h2>
-    </div>
     <div class="concept-grid reveal">
-      <div class="concept-body">
-        <p>The Pebble Pines country club is home to one of the most exclusive golf courses on the east coast where the fairways are always pristine, memberships are inherited, and the conversations are completely unhinged.</p>
-        <p>The caddy says little, but sees everything. And every so often, something slips out and he interjects with his thoughts.</p>
-        <p>This is a show about power obliviousness and the absurdity of who gets to run the world.</p>
+      <div class="concept-photo">
+        <img src="images/brand-hammock.jpg" alt="Pebble Pines">
+        <div class="concept-photo-tag">Members Only · Est. MMXXVI</div>
       </div>
-      <div class="crest-wrap">
-        <div class="heritage-crest">
-          <div class="crest-top-mark">× × ×</div>
-          <div class="crest-year">Est. MMXXVI</div>
-          <svg class="crest-clubs" viewBox="0 0 140 76" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <g stroke="var(--green)" stroke-width="1.4" fill="none" stroke-linecap="round">
-              <line x1="22" y1="12" x2="110" y2="64"/>
-              <line x1="118" y1="12" x2="30" y2="64"/>
-              <ellipse cx="20" cy="10" rx="6" ry="3" fill="var(--green)" transform="rotate(-28 20 10)"/>
-              <ellipse cx="120" cy="10" rx="6" ry="3" fill="var(--green)" transform="rotate(28 120 10)"/>
-            </g>
-            <circle cx="70" cy="38" r="7" fill="var(--cream)" stroke="var(--gold)" stroke-width="1.2"/>
-            <circle cx="68" cy="36" r="0.9" fill="var(--muted)" opacity="0.6"/>
-            <circle cx="71" cy="37" r="0.9" fill="var(--muted)" opacity="0.6"/>
-            <circle cx="70" cy="39" r="0.9" fill="var(--muted)" opacity="0.6"/>
-          </svg>
-          <div class="crest-name">Pebble Pines</div>
-          <div class="crest-rule"></div>
-          <div class="crest-sub">Country Club</div>
-          <div class="crest-bot-mark">× × ×</div>
-          <div class="crest-tag">Private Membership · Members Only</div>
+      <div class="concept-text">
+        <div class="section-label">The Show</div>
+        <h2 class="section-title">Tee Time 9am.<br><em style="font-style:italic;color:var(--green);">The Fairways Are Pristine.<br>The Members Are Not.</em></h2>
+        <div class="concept-body">
+          <p>The Pebble Pines country club is home to one of the most exclusive golf courses on the east coast where the fairways are always pristine, memberships are inherited, and the conversations are completely unhinged.</p>
+          <p>The caddy says little, but sees everything. And every so often, something slips out and he interjects with his thoughts.</p>
+          <p>This is a show about power obliviousness and the absurdity of who gets to run the world.</p>
         </div>
       </div>
     </div>
