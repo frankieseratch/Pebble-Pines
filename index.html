@@ -1020,7 +1020,7 @@ footer.pp-footer {
 }
 .flag-mobile {
   transform-origin: 360px 22px;
-  animation: flag-wave 2.6s ease-in-out infinite;
+  /* Mobile flag stays still — no wave animation */
 }
 @keyframes ball-roll {
   0%   { transform: translateX(0) translateY(0); opacity: 0; }
@@ -1141,24 +1141,31 @@ footer.pp-footer {
   .splash-meta-label { font-size: 8px; letter-spacing: 0.35em; }
   .splash-sub { font-size: 8px; letter-spacing: 0.3em; line-height: 1.5; max-width: 100%; padding: 0 8px; }
 
-  /* === PHOTO STRIP — full-image auto-scroll marquee on mobile === */
-  .strip-wrap { padding: 48px 0 0; overflow: hidden; }
-  .strip-caption { font-size: 10px; letter-spacing: 0.42em; margin-bottom: 22px; padding: 0 20px; }
-  .photo-strip {
-    display: flex;
-    flex-wrap: nowrap;
-    grid-template-columns: none;
-    width: max-content;
-    gap: 8px;
-    padding: 0 8px;
-    background: transparent;
-    animation: photo-marquee 32s linear infinite;
+  /* === PHOTO STRIP — quick-swap carousel with arrows === */
+  .strip-wrap { padding: 24px 0 0; }
+  .strip-caption { font-size: 10px; letter-spacing: 0.42em; margin-bottom: 12px; padding: 0 20px; }
+  .strip-carousel {
+    position: relative;
+    overflow: hidden;
+    width: 100vw;
+    background: #1a1a14;
   }
-  .strip-clone { display: block !important; }
+  .photo-strip {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    grid-template-columns: none !important;
+    width: 400% !important;
+    gap: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    animation: none !important;
+    transition: transform 0.55s cubic-bezier(0.7, 0.05, 0.3, 0.95);
+    will-change: transform;
+  }
   .strip-item {
-    flex: 0 0 auto;
-    width: 72vw;
-    aspect-ratio: 3/4;
+    flex: 0 0 25% !important;
+    width: 25% !important;
+    aspect-ratio: 4/5 !important;
     background: #1a1a14;
     overflow: hidden;
   }
@@ -1168,10 +1175,6 @@ footer.pp-footer {
     object-fit: contain;
     object-position: center center !important;
     background: #1a1a14;
-  }
-  @keyframes photo-marquee {
-    from { transform: translateX(0); }
-    to   { transform: translateX(calc(-72vw * 4 - 32px)); }
   }
 
   /* === CONCEPT === */
@@ -1223,8 +1226,13 @@ footer.pp-footer {
   .group-num { font-size: 9px; letter-spacing: 0.2em; }
 
   /* === EPISODES === */
-  #episodes { padding: 60px 0; }
+  #episodes { padding: 28px 0 36px !important; }
   #episodes .container { padding: 0 20px; }
+  #episodes .section-label { margin-bottom: 8px !important; }
+  #episodes .section-title { font-size: clamp(28px, 8vw, 42px) !important; margin-bottom: 18px !important; line-height: 1.05 !important; }
+  .ep-row { padding: 18px 0 !important; gap: 8px !important; }
+  .ep-num { padding-top: 0 !important; }
+  .ep-pill { margin-top: 2px !important; }
 
   /* === CASTING === */
   #casting { padding: 70px 0; }
@@ -1242,11 +1250,17 @@ footer.pp-footer {
   #brand-case .container { padding: 0 20px; }
 
   /* === BRANDS === */
-  #brands { padding: 70px 0; }
+  #brands { padding: 28px 0 36px !important; }
   #brands > .container { padding: 0 20px; }
-  #brands > .container > .reveal[style*="grid-template-columns"] { grid-template-columns: 1fr !important; gap: 32px !important; margin-bottom: 48px !important; }
-  .brand-grid { grid-template-columns: 1fr 1fr !important; gap: 8px !important; }
-  .brand-card { padding: 16px 18px !important; }
+  #brands > .container > .reveal[style*="grid-template-columns"] { grid-template-columns: 1fr !important; gap: 24px !important; margin-bottom: 24px !important; }
+  /* Brand cards: 3 across (was 2) */
+  .brand-grid { grid-template-columns: 1fr 1fr 1fr !important; gap: 4px !important; margin-bottom: 24px !important; }
+  .brand-card { padding: 12px 10px !important; }
+  .brand-card img { width: 22px !important; height: 22px !important; }
+  .brand-name { font-size: 11.5px !important; line-height: 1.2 !important; }
+  .brand-int { font-size: 10px !important; line-height: 1.4 !important; }
+  .brand-card div[style*="display:flex;align-items:center;gap:12px"] { gap: 6px !important; margin-bottom: 6px !important; }
+  .brand-cat-label { font-size: 9px !important; letter-spacing: 0.22em !important; margin-bottom: 12px !important; padding-bottom: 8px !important; }
 
   /* === TEAM === */
   #team { padding: 64px 0; }
@@ -1276,44 +1290,55 @@ footer.pp-footer {
   .masthead { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
   .splash-bg { animation: none !important; transform: scale(1.02) !important; }
 
-  /* WL × CADDYSHACK: side-by-side, smaller, tight */
+  /* WL × CADDYSHACK: both posters on one screen, very tight */
+  #style { padding: 36px 0 0 !important; }
+  #style .container { padding: 0 16px !important; }
+  #style .section-label { margin-bottom: 8px !important; }
+  #style .section-title { font-size: clamp(28px, 8vw, 40px) !important; margin-bottom: 16px !important; line-height: 1.05 !important; }
+  /* "Tonal Comps" caption */
+  #style div[style*="margin-bottom:48px;text-align:center"] { margin-bottom: 18px !important; font-size: 8px !important; letter-spacing: 0.22em !important; }
   div[style*="grid-template-columns:1fr auto 1fr"] {
     display: grid !important;
     grid-template-columns: 1fr auto 1fr !important;
-    gap: 8px !important;
+    gap: 4px !important;
     align-items: center !important;
-    padding: 0 16px !important;
+    padding: 0 8px !important;
   }
-  div[style*="max-width:340px"] { max-width: 130px !important; margin-bottom: 14px !important; box-shadow: 0 12px 30px rgba(0,0,0,0.5) !important; }
+  div[style*="max-width:340px"] { max-width: 110px !important; margin-bottom: 8px !important; box-shadow: 0 8px 20px rgba(0,0,0,0.5) !important; }
   /* The big × in middle: smaller */
-  div[style*="font-size:72px"] { font-size: 28px !important; padding-bottom: 28px !important; padding: 0 !important; }
+  div[style*="font-size:72px"] { font-size: 22px !important; padding: 0 !important; padding-bottom: 28px !important; }
   /* Comp poster wrappers — collapse padding */
   div[style*="padding:0 48px 24px"] { padding: 0 !important; }
   /* Comp titles — smaller */
-  div[style*="font-size:36px"][style*="Playfair"] { font-size: 16px !important; margin-bottom: 4px !important; }
-  div[style*="HBO · Mike White"] , div[style*="Warner Bros. · Harold Ramis"] { font-size: 8px !important; letter-spacing: 0.18em !important; }
+  div[style*="font-size:36px"][style*="Playfair"] { font-size: 13px !important; margin-bottom: 2px !important; line-height: 1.1 !important; }
+  div[style*="HBO · Mike White"] , div[style*="Warner Bros. · Harold Ramis"] { font-size: 7px !important; letter-spacing: 0.12em !important; line-height: 1.3 !important; }
 
-  /* MEET YOUR PLAYING PARTNERS — tighter gap above */
-  #characters .chars-header, #characters > div:first-child { padding: 18px 20px 18px !important; }
-  #characters > div:first-child h2 { font-size: clamp(30px, 8vw, 42px) !important; line-height: 1.05 !important; }
-  #characters > div:first-child > div:first-child > div:first-child { margin-bottom: 8px !important; }
+  /* MEET YOUR PLAYING PARTNERS — almost no gap above the grid */
+  #characters .chars-header, #characters > div:first-child { padding: 12px 20px 8px !important; }
+  #characters > div:first-child h2 { font-size: clamp(30px, 8vw, 42px) !important; line-height: 1.05 !important; margin-bottom: 0 !important; }
+  #characters > div:first-child > div:first-child > div:first-child { margin-bottom: 6px !important; }
+  #characters { padding: 0 !important; }
+  .groups-grid { padding: 0 !important; }
 
-  /* CASTING — tighter top gap */
-  #casting { padding: 56px 0 36px !important; }
+  /* CASTING — kill the gap */
+  #casting { padding: 28px 0 24px !important; }
   #casting .container { padding: 0 20px !important; }
-  #casting > .container > .reveal:first-child h2 { font-size: clamp(30px, 8vw, 44px) !important; margin-bottom: 14px !important; }
-  #casting > .container > .reveal:first-child p { font-size: 15px !important; line-height: 1.65 !important; margin-bottom: 36px !important; }
+  #casting > .container > .reveal:first-child h2 { font-size: clamp(30px, 8vw, 44px) !important; margin-bottom: 10px !important; line-height: 1.05 !important; }
+  #casting > .container > .reveal:first-child p { font-size: 15px !important; line-height: 1.6 !important; margin-bottom: 22px !important; }
+  #casting > .container > .reveal:first-child > div:first-child { margin-bottom: 8px !important; }
 
-  /* FIELD NOTES (brand-case) — tighter top gap */
-  #brand-case { padding: 36px 0 0 !important; }
+  /* FIELD NOTES (brand-case) — kill top + bottom gap */
+  #brand-case { padding: 16px 0 0 !important; }
   #brand-case .container { padding: 0 20px !important; }
-  #brand-case h2 { font-size: clamp(28px, 8vw, 42px) !important; line-height: 1.05 !important; margin-bottom: 16px !important; }
-  #brand-case p { font-size: 15px !important; line-height: 1.65 !important; }
+  #brand-case > .container > .reveal:first-child { margin-bottom: 24px !important; }
+  #brand-case > .container > .reveal:first-child > div:first-child { margin-bottom: 8px !important; }
+  #brand-case h2 { font-size: clamp(28px, 8vw, 42px) !important; line-height: 1.05 !important; margin-bottom: 12px !important; }
+  #brand-case p { font-size: 15px !important; line-height: 1.6 !important; margin-bottom: 16px !important; }
   /* Quote callout in Field Notes */
-  #brand-case div[style*="border-left:4px solid"] { padding: 22px 24px !important; margin-top: 24px !important; }
-  #brand-case div[style*="border-left:4px solid"] p { font-size: 16px !important; line-height: 1.55 !important; }
+  #brand-case div[style*="border-left:4px solid"] { padding: 18px 20px !important; margin-top: 16px !important; }
+  #brand-case div[style*="border-left:4px solid"] p { font-size: 14px !important; line-height: 1.55 !important; }
   /* Stat row spacing */
-  #brand-case div[style*="grid-template-columns:1fr 1fr 1fr 1fr"] { margin-top: 36px !important; }
+  #brand-case div[style*="grid-template-columns:1fr 1fr 1fr 1fr"] { margin-top: 18px !important; }
 
   /* BRANDS — tighten section spacing */
   #brands h2 { font-size: clamp(28px, 8vw, 42px) !important; line-height: 1.05 !important; }
@@ -1322,9 +1347,9 @@ footer.pp-footer {
   .ball-svg-desktop { display: none !important; }
   .ball-svg-mobile { display: block !important; }
 
-  /* CHARACTER PHOTOS: shift Boomers + Passenger Princesses focus DOWN (less headspace) */
+  /* CHARACTER PHOTOS: shift Boomers down (less headspace), give PP a small headspace */
   .group-card:nth-child(2) .group-photo img { object-position: center 42% !important; }
-  .group-card:nth-child(3) .group-photo img { object-position: center 48% !important; }
+  .group-card:nth-child(3) .group-photo img { object-position: center 32% !important; }
 
   /* CASTING name list: 3 across (was 1 col) */
   .cast-names { display: grid !important; grid-template-columns: 1fr 1fr 1fr !important; gap: 14px 10px !important; }
@@ -1333,40 +1358,29 @@ footer.pp-footer {
   .cast-names .handle { font-size: 8.5px !important; letter-spacing: 0.04em !important; word-break: break-all; }
   .cast-pillar { padding: 28px 20px 24px !important; }
 
-  /* SOURCES: convert grid into single-line scrolling marquee, pause on touch */
-  /* Both Sources blocks: target the inner grid */
-  #brand-case .reveal[style*="margin-top:64px"] > div[style*="grid-template-columns:1fr 1fr"],
-  #brands .reveal[style*="margin-top:64px"] > div[style*="grid-template-columns:1fr 1fr"] {
+  /* SOURCES: rectangle card carousel with arrow navigation */
+  .sources-block { position: relative !important; padding: 22px 16px !important; margin: 24px 0 0 !important; border-top: none !important; border: 1px solid rgba(245,240,232,0.2) !important; background: rgba(245,240,232,0.04) !important; overflow: hidden; }
+  .sources-block.sources-light { border: 1px solid var(--rule) !important; background: rgba(255,255,255,0.5) !important; }
+  .sources-block > div:first-child { margin-bottom: 14px !important; padding-right: 80px; }
+  .sources-track {
     display: flex !important;
-    grid-template-columns: none !important;
     flex-wrap: nowrap !important;
-    width: max-content !important;
-    gap: 36px !important;
-    animation: sources-marquee 38s linear infinite;
+    grid-template-columns: none !important;
+    gap: 0 !important;
+    width: 100% !important;
+    transition: transform 0.45s cubic-bezier(0.7, 0.05, 0.3, 0.95);
+    will-change: transform;
   }
-  #brand-case .reveal[style*="margin-top:64px"],
-  #brands .reveal[style*="margin-top:64px"] {
-    overflow: hidden !important;
-    margin-top: 32px !important;
-    margin-left: -20px !important; margin-right: -20px !important;
-    padding: 24px 0 16px !important;
-  }
-  #brand-case .reveal[style*="margin-top:64px"] > div[style*="grid-template-columns:1fr 1fr"] > div,
-  #brands .reveal[style*="margin-top:64px"] > div[style*="grid-template-columns:1fr 1fr"] > div {
-    flex: 0 0 auto !important;
-    white-space: nowrap !important;
-    font-size: 11px !important;
-  }
-  /* Pause on touch/hover */
-  #brand-case .reveal[style*="margin-top:64px"]:hover > div[style*="grid-template-columns:1fr 1fr"],
-  #brand-case .reveal[style*="margin-top:64px"]:active > div[style*="grid-template-columns:1fr 1fr"],
-  #brands .reveal[style*="margin-top:64px"]:hover > div[style*="grid-template-columns:1fr 1fr"],
-  #brands .reveal[style*="margin-top:64px"]:active > div[style*="grid-template-columns:1fr 1fr"] {
-    animation-play-state: paused;
-  }
-  @keyframes sources-marquee {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
+  .sources-track > div {
+    flex: 0 0 100% !important;
+    width: 100% !important;
+    white-space: normal !important;
+    font-size: 12px !important;
+    line-height: 1.55 !important;
+    padding: 4px 56px 4px 0 !important;
+    min-height: 70px !important;
+    display: flex !important;
+    align-items: center !important;
   }
 
   /* TEAM "Who We Are": tighten bottom gap */
@@ -1420,6 +1434,50 @@ footer.pp-footer {
   #brand-case div[style*="border:1px solid rgba(184,150,62,0.2)"] > div[style*="grid-template-columns:1fr 1fr;gap:60px"] > div:nth-child(2) > div > div[style*="letter-spacing:0.2em"] { font-size: 7px !important; letter-spacing: 0.04em !important; margin-top: 4px !important; line-height: 1.3 !important; }
   #brand-case div[style*="border:1px solid rgba(184,150,62,0.2)"] h3 { font-size: 20px !important; margin-bottom: 12px !important; }
   #brand-case div[style*="border:1px solid rgba(184,150,62,0.2)"] p { font-size: 13.5px !important; line-height: 1.55 !important; }
+
+  /* === CAROUSEL ARROWS (mobile) === */
+  .carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 38px; height: 38px;
+    background: rgba(26,26,20,0.55);
+    border: 1px solid rgba(245,240,232,0.5);
+    color: var(--cream);
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    line-height: 1;
+    font-weight: 300;
+    cursor: pointer;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    transition: background 0.2s, color 0.2s;
+    padding: 0 0 3px 0;
+  }
+  .carousel-arrow:hover, .carousel-arrow:active { background: var(--gold); color: var(--dark); }
+  .carousel-prev { left: 12px; }
+  .carousel-next { right: 12px; }
+  /* Sources arrows: smaller, scoped within the sources rectangle */
+  .sources-arrow {
+    width: 30px; height: 30px; font-size: 18px;
+    top: 18px; transform: none;
+    background: rgba(184,150,62,0.18);
+    border-color: rgba(184,150,62,0.5);
+  }
+  .sources-arrow.carousel-prev { left: auto; right: 50px; }
+  .sources-arrow.carousel-next { right: 14px; }
+  .sources-arrow-light { background: rgba(184,150,62,0.12); border-color: rgba(44,74,46,0.4); color: var(--green); }
+  .sources-arrow-light:hover, .sources-arrow-light:active { background: var(--green); color: var(--cream); }
+}
+
+/* Hide arrows on desktop */
+@media (min-width: 769px) {
+  .carousel-arrow { display: none !important; }
 }
 
 /* Extra narrow (iPhone SE / 360px and below) */
@@ -1491,20 +1549,18 @@ footer.pp-footer {
 
   <a href="#concept" class="splash-scroll-cta" aria-label="Scroll down">
     <div class="ball-hole-anim">
-      <!-- Mobile-only round ball SVG -->
+      <!-- Mobile-only round ball SVG (smaller ball + flag) -->
       <svg class="ball-svg-mobile" viewBox="0 0 600 110" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
-        <line x1="0" y1="92" x2="600" y2="92" stroke="rgba(184,150,62,0.32)" stroke-width="1.2" stroke-dasharray="4 5"/>
-        <ellipse cx="360" cy="92" rx="22" ry="6" fill="#000"/>
-        <line x1="360" y1="92" x2="360" y2="14" stroke="rgba(245,240,232,0.95)" stroke-width="2.4"/>
-        <path class="flag flag-mobile" d="M 360 14 L 392 22 L 360 30 Z" fill="#B8963E"/>
-        <ellipse class="ball-shadow ball-shadow-mobile" cx="22" cy="100" rx="11" ry="2.6" fill="rgba(0,0,0,0.42)"/>
+        <line x1="0" y1="92" x2="600" y2="92" stroke="rgba(184,150,62,0.28)" stroke-width="1" stroke-dasharray="3 5"/>
+        <ellipse cx="360" cy="92" rx="14" ry="3.5" fill="#000"/>
+        <line x1="360" y1="92" x2="360" y2="32" stroke="rgba(245,240,232,0.92)" stroke-width="1.6"/>
+        <path class="flag flag-mobile" d="M 360 32 L 380 38 L 360 44 Z" fill="#B8963E"/>
+        <ellipse class="ball-shadow ball-shadow-mobile" cx="22" cy="98" rx="6.5" ry="1.6" fill="rgba(0,0,0,0.38)"/>
         <g class="golf-ball golf-ball-mobile">
-          <circle cx="22" cy="78" r="14" fill="#F5F0E8"/>
-          <circle cx="18" cy="74" r="1.4" fill="rgba(0,0,0,0.18)"/>
-          <circle cx="25" cy="76" r="1.4" fill="rgba(0,0,0,0.18)"/>
-          <circle cx="22" cy="80" r="1.4" fill="rgba(0,0,0,0.18)"/>
-          <circle cx="20" cy="82" r="1.1" fill="rgba(0,0,0,0.18)"/>
-          <circle cx="26" cy="80" r="1.1" fill="rgba(0,0,0,0.18)"/>
+          <circle cx="22" cy="84" r="8" fill="#F5F0E8"/>
+          <circle cx="20" cy="82" r="0.9" fill="rgba(0,0,0,0.18)"/>
+          <circle cx="24" cy="83" r="0.9" fill="rgba(0,0,0,0.18)"/>
+          <circle cx="22" cy="86" r="0.9" fill="rgba(0,0,0,0.18)"/>
         </g>
       </svg>
       <!-- Desktop SVG (squashed wide) -->
@@ -1534,18 +1590,17 @@ footer.pp-footer {
 </section>
 
 <!-- PHOTO STRIP -->
-<div class="strip-wrap">
+<div class="strip-wrap" data-carousel="photos">
   <div class="strip-caption">Visual Reference</div>
-  <div class="photo-strip">
-    <div class="strip-item"><img src="images/strip-1.jpg" alt="" style="object-position: center 50%;"></div>
-    <div class="strip-item"><img src="images/strip-2.jpg" alt="" style="object-position: center 55%;"></div>
-    <div class="strip-item"><img src="images/strip-3.jpg" alt="" style="object-position: center 50%;"></div>
-    <div class="strip-item"><img src="images/strip-4.jpg" alt="" style="object-position: center 45%;"></div>
-    <!-- Mobile marquee duplicates (hidden on desktop) -->
-    <div class="strip-item strip-clone" aria-hidden="true"><img src="images/strip-1.jpg" alt="" style="object-position: center 50%;"></div>
-    <div class="strip-item strip-clone" aria-hidden="true"><img src="images/strip-2.jpg" alt="" style="object-position: center 55%;"></div>
-    <div class="strip-item strip-clone" aria-hidden="true"><img src="images/strip-3.jpg" alt="" style="object-position: center 50%;"></div>
-    <div class="strip-item strip-clone" aria-hidden="true"><img src="images/strip-4.jpg" alt="" style="object-position: center 45%;"></div>
+  <div class="strip-carousel">
+    <div class="photo-strip">
+      <div class="strip-item"><img src="images/strip-1.jpg" alt="" style="object-position: center 50%;"></div>
+      <div class="strip-item"><img src="images/strip-2.jpg" alt="" style="object-position: center 55%;"></div>
+      <div class="strip-item"><img src="images/strip-3.jpg" alt="" style="object-position: center 50%;"></div>
+      <div class="strip-item"><img src="images/strip-4.jpg" alt="" style="object-position: center 45%;"></div>
+    </div>
+    <button class="carousel-arrow carousel-prev" data-dir="prev" aria-label="Previous photo">‹</button>
+    <button class="carousel-arrow carousel-next" data-dir="next" aria-label="Next photo">›</button>
   </div>
 </div>
 
@@ -1752,7 +1807,7 @@ footer.pp-footer {
   <div class="ep-overlay"></div>
   <div class="container">
     <div class="reveal">
-      <div class="section-label">The Slate</div>
+      <div class="section-label">The Series</div>
       <h2 class="section-title">Sample Episodes</h2>
     </div>
     <div class="ep-list reveal">
@@ -2006,17 +2061,9 @@ footer.pp-footer {
     </div>
 
     <!-- BIBLIOGRAPHY · BUSINESS CASE -->
-    <div class="reveal" style="margin-top:64px;padding:40px 48px;border-top:1px solid rgba(245,240,232,0.12);">
+    <div class="reveal sources-block" data-carousel="sources" style="margin-top:64px;padding:40px 48px;border-top:1px solid rgba(245,240,232,0.12);">
       <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;">Sources</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 40px;font-family:'DM Mono',monospace;font-size:11px;line-height:1.7;color:rgba(245,240,232,0.55);">
-        <div>01 · National Golf Foundation, <em>2025 U.S. Golf Participation Report</em>. <a href="https://www.ngf.org/golf-industry-research/" target="_blank" style="color:var(--gold-light);text-decoration:none;">ngf.org</a></div>
-        <div>02 · Deloitte, <em>Digital Media Trends 2026: Short-Form Video</em>. <a href="https://www2.deloitte.com/us/en/insights/industry/technology/digital-media-trends-consumption-habits-survey.html" target="_blank" style="color:var(--gold-light);text-decoration:none;">deloitte.com</a></div>
-        <div>03 · Research Nester, <em>Global Short-Form Video Market 2025–2033</em>. <a href="https://www.researchnester.com/reports/short-form-video-market/" target="_blank" style="color:var(--gold-light);text-decoration:none;">researchnester.com</a></div>
-        <div>04 · EMARKETER, <em>Creator Economy Revenue Mix 2026</em>. <a href="https://www.emarketer.com/" target="_blank" style="color:var(--gold-light);text-decoration:none;">emarketer.com</a></div>
-        <div>05 · Digiday / Tubular Labs, <em>Creator vs. League Engagement Benchmarks 2024</em>. <a href="https://digiday.com/" target="_blank" style="color:var(--gold-light);text-decoration:none;">digiday.com</a></div>
-        <div>06 · SportsPro / IEG, <em>Golf Sponsorship Market Sizing 2025</em>. <a href="https://www.sportspromedia.com/" target="_blank" style="color:var(--gold-light);text-decoration:none;">sportspromedia.com</a></div>
-        <div>07 · Sports Business Journal, <em>Good Good Golf Funding Round</em>, July 2025. <a href="https://www.sportsbusinessjournal.com/" target="_blank" style="color:var(--gold-light);text-decoration:none;">sportsbusinessjournal.com</a></div>
-        <div>08 · Golfweek, <em>Good Good × Omaha Productions PGA Tour Title Sponsorship</em>, 2025. <a href="https://golfweek.usatoday.com/" target="_blank" style="color:var(--gold-light);text-decoration:none;">golfweek.usatoday.com</a></div>
+      <div class="sources-track" style="display:grid;grid-template-columns:1fr 1fr;gap:10px 40px;font-family:'DM Mono',monospace;font-size:11px;line-height:1.7;color:rgba(245,240,232,0.55);">
         <div>01 · National Golf Foundation, <em>2025 U.S. Golf Participation Report</em>. <a href="https://www.ngf.org/golf-industry-research/" target="_blank" style="color:var(--gold-light);text-decoration:none;">ngf.org</a></div>
         <div>02 · Deloitte, <em>Digital Media Trends 2026: Short-Form Video</em>. <a href="https://www2.deloitte.com/us/en/insights/industry/technology/digital-media-trends-consumption-habits-survey.html" target="_blank" style="color:var(--gold-light);text-decoration:none;">deloitte.com</a></div>
         <div>03 · Research Nester, <em>Global Short-Form Video Market 2025–2033</em>. <a href="https://www.researchnester.com/reports/short-form-video-market/" target="_blank" style="color:var(--gold-light);text-decoration:none;">researchnester.com</a></div>
@@ -2026,6 +2073,8 @@ footer.pp-footer {
         <div>07 · Sports Business Journal, <em>Good Good Golf Funding Round</em>, July 2025. <a href="https://www.sportsbusinessjournal.com/" target="_blank" style="color:var(--gold-light);text-decoration:none;">sportsbusinessjournal.com</a></div>
         <div>08 · Golfweek, <em>Good Good × Omaha Productions PGA Tour Title Sponsorship</em>, 2025. <a href="https://golfweek.usatoday.com/" target="_blank" style="color:var(--gold-light);text-decoration:none;">golfweek.usatoday.com</a></div>
       </div>
+      <button class="carousel-arrow carousel-prev sources-arrow" data-dir="prev" aria-label="Previous source">‹</button>
+      <button class="carousel-arrow carousel-next sources-arrow" data-dir="next" aria-label="Next source">›</button>
     </div>
 
     </div>
@@ -2258,18 +2307,16 @@ new Chart(eCtx, {
     </div>
 
     <!-- BIBLIOGRAPHY · BRAND INTEGRATION -->
-    <div class="reveal" style="margin-top:64px;padding:40px 0 0;border-top:1px solid var(--rule);">
+    <div class="reveal sources-block sources-light" data-carousel="sources" style="margin-top:64px;padding:40px 0 0;border-top:1px solid var(--rule);">
       <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;">Sources</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 40px;font-family:'DM Mono',monospace;font-size:11px;line-height:1.7;color:var(--muted);">
-        <div>01 · IEG / SponsorUnited, <em>Global Golf Sponsorship Market 2025</em>. <a href="https://www.sponsorunited.com/" target="_blank" style="color:var(--green);text-decoration:none;">sponsorunited.com</a></div>
-        <div>02 · Nielsen Sports, <em>ROI on Golf Sponsorship Activation 2024</em>. <a href="https://www.nielsen.com/solutions/sports-and-entertainment/" target="_blank" style="color:var(--green);text-decoration:none;">nielsen.com</a></div>
-        <div>03 · National Golf Foundation, <em>2025 U.S. Participation Report</em>. <a href="https://www.ngf.org/golf-industry-research/" target="_blank" style="color:var(--green);text-decoration:none;">ngf.org</a></div>
-        <div>04 · Acquia / Golfer Demographics, <em>Average Household Income by Participation</em>. <a href="https://www.ngf.org/the-demographics-of-u-s-golf-participation/" target="_blank" style="color:var(--green);text-decoration:none;">ngf.org</a></div>
+      <div class="sources-track" style="display:grid;grid-template-columns:1fr 1fr;gap:10px 40px;font-family:'DM Mono',monospace;font-size:11px;line-height:1.7;color:var(--muted);">
         <div>01 · IEG / SponsorUnited, <em>Global Golf Sponsorship Market 2025</em>. <a href="https://www.sponsorunited.com/" target="_blank" style="color:var(--green);text-decoration:none;">sponsorunited.com</a></div>
         <div>02 · Nielsen Sports, <em>ROI on Golf Sponsorship Activation 2024</em>. <a href="https://www.nielsen.com/solutions/sports-and-entertainment/" target="_blank" style="color:var(--green);text-decoration:none;">nielsen.com</a></div>
         <div>03 · National Golf Foundation, <em>2025 U.S. Participation Report</em>. <a href="https://www.ngf.org/golf-industry-research/" target="_blank" style="color:var(--green);text-decoration:none;">ngf.org</a></div>
         <div>04 · Acquia / Golfer Demographics, <em>Average Household Income by Participation</em>. <a href="https://www.ngf.org/the-demographics-of-u-s-golf-participation/" target="_blank" style="color:var(--green);text-decoration:none;">ngf.org</a></div>
       </div>
+      <button class="carousel-arrow carousel-prev sources-arrow sources-arrow-light" data-dir="prev" aria-label="Previous source">‹</button>
+      <button class="carousel-arrow carousel-next sources-arrow sources-arrow-light" data-dir="next" aria-label="Next source">›</button>
     </div>
 
   </div>
@@ -2340,11 +2387,86 @@ new Chart(eCtx, {
 </footer>
 
 <script>
+  // Reveal-on-scroll
   const reveals = document.querySelectorAll('.reveal');
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
   reveals.forEach(el => obs.observe(el));
+
+  // ===== Mobile carousels (Visual Reference + Sources) =====
+  function initCarousels() {
+    if (window.innerWidth > 768) return; // mobile only
+
+    // PHOTO STRIP carousel
+    document.querySelectorAll('[data-carousel="photos"]').forEach(wrap => {
+      const track = wrap.querySelector('.photo-strip');
+      const slides = track ? track.children : [];
+      if (!track || slides.length === 0) return;
+      let idx = 0;
+      const total = slides.length;
+      const advance = (delta = 1) => {
+        idx = (idx + delta + total) % total;
+        track.style.transform = `translateX(-${idx * (100 / total)}%)`;
+      };
+      let timer = setInterval(() => advance(1), 3500);
+      const reset = () => { clearInterval(timer); timer = setInterval(() => advance(1), 4500); };
+      wrap.querySelectorAll('.carousel-arrow').forEach(btn => {
+        btn.addEventListener('click', () => {
+          advance(btn.dataset.dir === 'next' ? 1 : -1);
+          reset();
+        });
+      });
+      // Touch swipe
+      let startX = 0, isDown = false;
+      track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; isDown = true; clearInterval(timer); }, { passive: true });
+      track.addEventListener('touchend', e => {
+        if (!isDown) return;
+        isDown = false;
+        const dx = e.changedTouches[0].clientX - startX;
+        if (dx > 40) advance(-1);
+        else if (dx < -40) advance(1);
+        reset();
+      }, { passive: true });
+    });
+
+    // SOURCES carousels
+    document.querySelectorAll('[data-carousel="sources"]').forEach(wrap => {
+      const track = wrap.querySelector('.sources-track');
+      const slides = track ? track.children : [];
+      if (!track || slides.length === 0) return;
+      let idx = 0;
+      const total = slides.length;
+      const advance = (delta = 1) => {
+        idx = (idx + delta + total) % total;
+        track.style.transform = `translateX(-${idx * 100}%)`;
+      };
+      let timer = setInterval(() => advance(1), 4000);
+      const reset = () => { clearInterval(timer); timer = setInterval(() => advance(1), 6000); };
+      wrap.querySelectorAll('.carousel-arrow').forEach(btn => {
+        btn.addEventListener('click', () => {
+          advance(btn.dataset.dir === 'next' ? 1 : -1);
+          reset();
+        });
+      });
+      // Touch swipe
+      let startX = 0, isDown = false;
+      track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; isDown = true; clearInterval(timer); }, { passive: true });
+      track.addEventListener('touchend', e => {
+        if (!isDown) return;
+        isDown = false;
+        const dx = e.changedTouches[0].clientX - startX;
+        if (dx > 30) advance(-1);
+        else if (dx < -30) advance(1);
+        reset();
+      }, { passive: true });
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCarousels);
+  } else {
+    initCarousels();
+  }
 </script>
 
 <style>
