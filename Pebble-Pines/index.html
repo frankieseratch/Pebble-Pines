@@ -1138,18 +1138,18 @@ footer.pp-footer {
   .splash-meta-label { font-size: 8px; letter-spacing: 0.35em; }
   .splash-sub { font-size: 8px; letter-spacing: 0.3em; line-height: 1.5; max-width: 100%; padding: 0 8px; }
 
-  /* === PHOTO STRIP — opacity quick-swap, FULL SCREEN === */
-  .strip-wrap { padding: 0; position: relative; }
-  /* Caption overlays the photo so the carousel can take 100vh */
+  /* === PHOTO STRIP — image-led carousel on cream bg, no dark box === */
+  .strip-wrap { padding: 16px 0 0; background: var(--cream); position: relative; }
+  /* Caption pill overlays the photo */
   .strip-caption {
     position: absolute;
-    top: 16px; left: 50%;
+    top: 26px; left: 50%;
     transform: translateX(-50%);
     z-index: 6;
     font-size: 10px; letter-spacing: 0.45em;
     margin-bottom: 0; padding: 6px 14px;
     color: var(--cream);
-    background: rgba(0,0,0,0.32);
+    background: rgba(26,26,20,0.48);
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
     border-radius: 2px;
@@ -1157,53 +1157,50 @@ footer.pp-footer {
   }
   .strip-carousel {
     position: relative;
-    overflow: hidden;
     width: 100vw;
-    /* FULL mobile viewport height — every photo takes the whole screen */
-    height: 100vh;
+    /* Hug the active image — no fixed height, no dark void below */
+    height: auto;
     aspect-ratio: auto;
-    background: #0d0d0a;
+    background: var(--cream);
+    overflow: hidden;
   }
   .photo-strip {
     display: block !important;
     grid-template-columns: none !important;
     width: 100% !important;
-    height: 100% !important;
+    height: auto !important;
     gap: 0 !important;
     padding: 0 !important;
     background: transparent !important;
     animation: none !important;
     transition: none !important;
     transform: none !important;
-    position: absolute !important;
-    inset: 0 !important;
+    position: relative !important;
   }
+  /* Quick-swap: only the active slide is in layout; parent hugs it */
   .strip-item {
-    position: absolute !important;
-    inset: 0 !important;
+    display: none !important;
+    position: relative !important;
+    inset: auto !important;
     flex: none !important;
     width: 100% !important;
-    height: 100% !important;
+    height: auto !important;
     aspect-ratio: auto !important;
-    background: #0d0d0a;
+    background: transparent;
     overflow: hidden;
-    opacity: 0;
-    transition: opacity 0.22s ease;
+    opacity: 1;
+    transition: none !important;
     pointer-events: none;
   }
-  .strip-item.active { opacity: 1; pointer-events: auto; }
+  .strip-item.active { display: block !important; pointer-events: auto; }
   .strip-item img {
     width: 100% !important;
-    height: 100% !important;
-    /* COVER fills the entire section; per-image object-position frames the subject */
-    object-fit: cover !important;
-    background: #0d0d0a;
+    height: auto !important;
+    /* CONTAIN-style: natural aspect, no forced cropping */
+    object-fit: contain !important;
+    display: block !important;
+    background: var(--cream);
   }
-  /* Per-image framing so subjects stay in shot */
-  .strip-carousel .strip-item:nth-child(1) img { object-position: center 65% !important; }
-  .strip-carousel .strip-item:nth-child(2) img { object-position: center 60% !important; }
-  .strip-carousel .strip-item:nth-child(3) img { object-position: 30% center !important; }
-  .strip-carousel .strip-item:nth-child(4) img { object-position: center 40% !important; }
 
   /* === CONCEPT === */
   #concept { padding: 20px 0 18px !important; }
@@ -1394,39 +1391,6 @@ footer.pp-footer {
   .cast-names .handle { font-size: 8.5px !important; letter-spacing: 0.04em !important; word-break: break-all; }
   .cast-pillar { padding: 28px 20px 24px !important; }
 
-  /* Mobile-specific source block tweaks (base styles in global rules above) */
-  .sources-block { padding: 14px 44px !important; margin: 18px 0 0 !important; }
-  .sources-block > div:first-child { margin-bottom: 8px !important; padding-right: 0 !important; }
-  .sources-track {
-    display: block !important;
-    grid-template-columns: none !important;
-    gap: 0 !important;
-    width: 100% !important;
-    position: relative !important;
-    min-height: 68px !important;
-    transition: none !important;
-    transform: none !important;
-  }
-  .sources-track > div {
-    position: absolute !important;
-    inset: 0 !important;
-    flex: none !important;
-    width: 100% !important;
-    white-space: normal !important;
-    font-size: 12.5px !important;
-    line-height: 1.55 !important;
-    padding: 12px 4px !important;
-    display: grid !important;
-    place-items: center !important;
-    gap: 0 !important;
-    text-align: center !important;
-    opacity: 0;
-    transition: opacity 0.18s ease;
-    pointer-events: none;
-  }
-  .sources-track > div.active { opacity: 1; pointer-events: auto; }
-  .sources-track > div a { font-weight: 600; word-break: break-word; }
-  .sources-track > div em { font-style: italic; }
 
   /* TEAM "Who We Are": tighten bottom gap */
   #team { padding: 24px 0 18px !important; }
@@ -1499,45 +1463,29 @@ footer.pp-footer {
   .strip-carousel, .photo-strip, .sources-track, .strip-item { touch-action: pan-y !important; }
   #overheard, .marquee-viewport, .marquee-track { touch-action: pan-y !important; }
 
-  /* === CAROUSEL ARROWS — minimal, on-theme === */
-  .carousel-arrow {
+  /* === PHOTO CAROUSEL ARROWS — chevron overlays on the image === */
+  .strip-carousel .carousel-arrow {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 36px; height: 36px;
+    width: 32px; height: 32px;
     background: transparent;
     border: none;
-    color: var(--gold-light);
-    font-family: 'Playfair Display', serif;
-    font-size: 18px;
-    line-height: 1;
-    font-weight: 300;
+    color: rgba(245,240,232,0.85);
     cursor: pointer;
     z-index: 5;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: color 0.2s, transform 0.2s;
+    transition: color 0.15s, transform 0.15s;
     padding: 0;
-    text-shadow: 0 1px 8px rgba(0,0,0,0.55);
     -webkit-tap-highlight-color: transparent;
+    filter: drop-shadow(0 1px 4px rgba(0,0,0,0.5));
   }
-  .carousel-arrow:hover, .carousel-arrow:active { color: var(--gold); transform: translateY(-50%) scale(1.15); }
-  .carousel-prev { left: 8px; }
-  .carousel-next { right: 8px; }
-  /* Sources arrows — same minimalism, scoped to the rectangle's top-right */
-  .sources-arrow {
-    width: 26px; height: 26px;
-    font-size: 14px;
-    top: 16px; transform: none;
-    color: var(--gold);
-    text-shadow: none;
-  }
-  .sources-arrow:hover, .sources-arrow:active { transform: scale(1.18); color: var(--gold-light); }
-  .sources-arrow.carousel-prev { left: auto; right: 38px; }
-  .sources-arrow.carousel-next { right: 10px; }
-  .sources-arrow-light { color: var(--green); }
-  .sources-arrow-light:hover, .sources-arrow-light:active { color: var(--gold); }
+  .strip-carousel .carousel-arrow svg { width: 14px; height: 20px; display: block; }
+  .strip-carousel .carousel-arrow:hover, .strip-carousel .carousel-arrow:active { color: var(--gold-light); transform: translateY(-50%) scale(1.15); }
+  .strip-carousel .carousel-prev { left: 16px; }
+  .strip-carousel .carousel-next { right: 16px; }
 }
 
 /* Hide PHOTO arrows on desktop (photo strip stays as 4-col grid).
@@ -1546,77 +1494,102 @@ footer.pp-footer {
   .strip-wrap .carousel-arrow { display: none !important; }
 }
 
-/* === SOURCES CAROUSEL — applies to BOTH desktop and mobile === */
+/* === SOURCES — thin footnote line (no box, all viewports) === */
 .sources-block {
+  display: flex !important;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  border: none !important;
   position: relative;
-  padding: 16px 50px;
-  margin: 36px 0 0;
-  border: 1px solid rgba(245,240,232,0.2);
-  background: rgba(245,240,232,0.04);
   overflow: hidden;
-  border-top: none;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: rgba(245,240,232,0.55);
+  /* Subtle hairline above so the footnote feels separated from the chart/brands content above */
+  border-top: 1px solid rgba(245,240,232,0.08) !important;
 }
 .sources-block.sources-light {
-  border: 1px solid var(--rule);
-  background: rgba(255,255,255,0.5);
+  color: var(--muted);
+  border-top: 1px solid var(--rule) !important;
 }
+/* The "SOURCES" label sits inline, prefix style */
 .sources-block > div:first-child {
-  margin-bottom: 10px;
-  padding-right: 0;
-  text-align: center;
+  margin: 0 !important;
+  padding: 0 !important;
+  flex-shrink: 0;
+  font-family: 'DM Mono', monospace !important;
+  font-size: 10px !important;
+  letter-spacing: 0.3em !important;
+  text-transform: uppercase !important;
+  color: var(--gold) !important;
+  text-align: left !important;
 }
+.sources-block.sources-light > div:first-child { color: var(--green) !important; }
+/* Track: single horizontal line, slides stacked, ellipsis on overflow */
 .sources-track {
   display: block !important;
   grid-template-columns: none !important;
   gap: 0 !important;
-  width: 100%;
-  position: relative;
-  min-height: 44px;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  position: relative !important;
+  height: 1.5em !important;
+  overflow: hidden !important;
 }
 .sources-track > div {
   position: absolute !important;
   inset: 0 !important;
-  width: 100%;
-  white-space: normal;
-  font-size: 13px;
-  line-height: 1.5;
-  padding: 8px 4px;
-  display: grid;
-  place-items: center;
-  gap: 0;
-  text-align: center;
+  width: 100% !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  display: block !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  font-size: 11px !important;
+  line-height: 1.5em !important;
+  letter-spacing: 0.04em !important;
+  text-align: left !important;
   opacity: 0;
-  transition: opacity 0.18s ease;
+  transition: none !important;
   pointer-events: none;
 }
 .sources-track > div.active { opacity: 1; pointer-events: auto; }
 .sources-track > div em { font-style: italic; }
-.sources-track > div a { font-weight: 600; word-break: break-word; }
+.sources-track > div a { font-weight: 500; color: inherit; text-decoration: underline; text-decoration-color: rgba(184,150,62,0.4); text-underline-offset: 2px; }
+.sources-block.sources-light .sources-track > div a { text-decoration-color: rgba(44,74,46,0.4); }
 
-/* Sources arrows: vertical-center, on left + right of the rectangle (BOTH viewports) */
+/* Chevron arrows — thin strokes, no fill, match typography color */
 .sources-arrow {
-  position: absolute !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  width: 28px; height: 28px;
+  position: relative !important;
+  top: auto !important;
+  transform: none !important;
+  width: 18px !important; height: 18px !important;
   background: transparent !important;
   border: none !important;
-  color: var(--gold) !important;
+  color: inherit !important;
   cursor: pointer;
-  z-index: 5;
+  z-index: 2;
   display: flex !important;
   align-items: center;
   justify-content: center;
-  padding: 0;
-  transition: color 0.2s, transform 0.2s;
+  padding: 0 !important;
+  flex-shrink: 0;
+  transition: color 0.15s, transform 0.15s;
   -webkit-tap-highlight-color: transparent;
+  font-size: 0;
+  line-height: 0;
+  opacity: 0.7;
 }
-.sources-arrow svg { width: 10px; height: 14px; display: block; }
-.sources-arrow:hover, .sources-arrow:active { color: var(--gold-light) !important; transform: translateY(-50%) scale(1.2) !important; }
-.sources-arrow.carousel-prev { left: 12px !important; right: auto !important; }
-.sources-arrow.carousel-next { right: 12px !important; left: auto !important; }
-.sources-arrow-light { color: var(--green) !important; }
-.sources-arrow-light:hover, .sources-arrow-light:active { color: var(--gold) !important; }
+.sources-arrow svg { width: 8px !important; height: 12px !important; display: block; stroke: currentColor; fill: none; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.sources-arrow:hover, .sources-arrow:active { opacity: 1; transform: scale(1.15) !important; }
+.sources-arrow.carousel-prev { left: auto !important; right: auto !important; order: -1; }
+.sources-arrow.carousel-next { left: auto !important; right: auto !important; order: 99; }
+.sources-arrow-light, .sources-arrow-light:hover { color: inherit !important; }
 
 /* Extra narrow (iPhone SE / 360px and below) */
 @media (max-width: 380px) {
@@ -1731,8 +1704,8 @@ footer.pp-footer {
       <div class="strip-item"><img src="images/strip-3.jpg" alt="" style="object-position: center 50%;"></div>
       <div class="strip-item"><img src="images/strip-4.jpg" alt="" style="object-position: center 45%;"></div>
     </div>
-    <button class="carousel-arrow carousel-prev" data-dir="prev" aria-label="Previous photo"><svg viewBox="0 0 12 18" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polygon points="11.5,0.8 0.5,9 11.5,17.2" fill="currentColor"/></svg></button>
-    <button class="carousel-arrow carousel-next" data-dir="next" aria-label="Next photo"><svg viewBox="0 0 12 18" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polygon points="0.5,0.8 11.5,9 0.5,17.2" fill="currentColor"/></svg></button>
+    <button class="carousel-arrow carousel-prev" data-dir="prev" aria-label="Previous photo"><svg viewBox="0 0 14 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polyline points="10,3 4,10 10,17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button class="carousel-arrow carousel-next" data-dir="next" aria-label="Next photo"><svg viewBox="0 0 14 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polyline points="4,3 10,10 4,17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
   </div>
 </div>
 
@@ -2205,8 +2178,8 @@ footer.pp-footer {
         <div>07 · Sports Business Journal, <em>Good Good Golf Funding Round</em>, July 2025. <a href="https://www.sportsbusinessjournal.com/" target="_blank" style="color:var(--gold-light);text-decoration:none;">sportsbusinessjournal.com</a></div>
         <div>08 · Golfweek, <em>Good Good × Omaha Productions PGA Tour Title Sponsorship</em>, 2025. <a href="https://golfweek.usatoday.com/" target="_blank" style="color:var(--gold-light);text-decoration:none;">golfweek.usatoday.com</a></div>
       </div>
-      <button class="carousel-arrow carousel-prev sources-arrow" data-dir="prev" aria-label="Previous source"><svg viewBox="0 0 10 14" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polygon points="9.5,0.6 0.5,7 9.5,13.4" fill="currentColor"/></svg></button>
-      <button class="carousel-arrow carousel-next sources-arrow" data-dir="next" aria-label="Next source"><svg viewBox="0 0 10 14" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polygon points="0.5,0.6 9.5,7 0.5,13.4" fill="currentColor"/></svg></button>
+      <button class="carousel-arrow carousel-prev sources-arrow" data-dir="prev" aria-label="Previous source"><svg viewBox="0 0 10 14" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polyline points="7.5,2 2.5,7 7.5,12"/></svg></button>
+      <button class="carousel-arrow carousel-next sources-arrow" data-dir="next" aria-label="Next source"><svg viewBox="0 0 10 14" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polyline points="2.5,2 7.5,7 2.5,12"/></svg></button>
     </div>
 
     </div>
@@ -2447,8 +2420,8 @@ new Chart(eCtx, {
         <div>03 · National Golf Foundation, <em>2025 U.S. Participation Report</em>. <a href="https://www.ngf.org/golf-industry-research/" target="_blank" style="color:var(--green);text-decoration:none;">ngf.org</a></div>
         <div>04 · Acquia / Golfer Demographics, <em>Average Household Income by Participation</em>. <a href="https://www.ngf.org/the-demographics-of-u-s-golf-participation/" target="_blank" style="color:var(--green);text-decoration:none;">ngf.org</a></div>
       </div>
-      <button class="carousel-arrow carousel-prev sources-arrow sources-arrow-light" data-dir="prev" aria-label="Previous source"><svg viewBox="0 0 10 14" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polygon points="9.5,0.6 0.5,7 9.5,13.4" fill="currentColor"/></svg></button>
-      <button class="carousel-arrow carousel-next sources-arrow sources-arrow-light" data-dir="next" aria-label="Next source"><svg viewBox="0 0 10 14" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polygon points="0.5,0.6 9.5,7 0.5,13.4" fill="currentColor"/></svg></button>
+      <button class="carousel-arrow carousel-prev sources-arrow sources-arrow-light" data-dir="prev" aria-label="Previous source"><svg viewBox="0 0 10 14" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polyline points="7.5,2 2.5,7 7.5,12"/></svg></button>
+      <button class="carousel-arrow carousel-next sources-arrow sources-arrow-light" data-dir="next" aria-label="Next source"><svg viewBox="0 0 10 14" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polyline points="2.5,2 7.5,7 2.5,12"/></svg></button>
     </div>
 
   </div>
@@ -2586,9 +2559,7 @@ new Chart(eCtx, {
 
 <style>
 @media (max-width: 768px) {
-  /* Character rows */
-  #characters .reveal[style] { display: block !important; }
-  #characters .reveal > div:first-child { min-height: 300px; }
+  /* Character rows — legacy rules removed; current 2x2 layout sets its own dimensions */
   
   /* Caddy section */
   #caddy .caddy-split { display: block !important; }
