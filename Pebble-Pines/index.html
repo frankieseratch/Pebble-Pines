@@ -29,6 +29,76 @@
   .nav-links a { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; text-decoration: none; color: var(--muted); transition: color 0.2s; }
   .nav-links a:hover { color: var(--green); }
 
+  /* Hamburger button — hidden by default (desktop), revealed on mobile */
+  .nav-hamburger {
+    display: none;
+    background: transparent;
+    border: none;
+    padding: 6px;
+    margin: 0;
+    cursor: pointer;
+    color: var(--green);
+    -webkit-tap-highlight-color: transparent;
+    line-height: 0;
+  }
+  .nav-hamburger svg { width: 22px; height: 16px; display: block; }
+
+  /* Mobile fullscreen menu overlay */
+  .mobile-menu {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: var(--cream);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0s linear 0.2s;
+  }
+  .mobile-menu.open {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.2s ease, visibility 0s linear 0s;
+  }
+  .mobile-menu-close {
+    position: absolute;
+    top: 18px;
+    right: 22px;
+    width: 36px;
+    height: 36px;
+    background: transparent;
+    border: none;
+    padding: 6px;
+    cursor: pointer;
+    color: var(--green);
+    line-height: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .mobile-menu-close svg { width: 20px; height: 20px; display: block; }
+  .mobile-menu-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+  }
+  .mobile-menu-list a {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--green);
+    transition: opacity 0.15s ease;
+    padding: 6px 12px;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .mobile-menu-list a:hover, .mobile-menu-list a:active { opacity: 0.6; }
+
   /* HERO */
   .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; }
   .hero-left { position: relative; display: flex; flex-direction: column; justify-content: flex-end; padding: 80px 70px; overflow: hidden; }
@@ -280,6 +350,9 @@
 
   /* NAV */
   nav { padding: 14px 20px; }
+  .nav-hamburger { display: inline-flex; align-items: center; justify-content: center; }
+  /* Lock body scroll while overlay is open */
+  body.menu-open { overflow: hidden; }
   .nav-links { display: none; }
   .nav-logo { font-size: 11px; letter-spacing: 0.2em; }
 
@@ -1138,7 +1211,7 @@ footer.pp-footer {
   .splash-meta-label { font-size: 8px; letter-spacing: 0.35em; }
   .splash-sub { font-size: 8px; letter-spacing: 0.3em; line-height: 1.5; max-width: 100%; padding: 0 8px; }
 
-  /* === PHOTO STRIP — image-led carousel on cream bg, no dark box === */
+  /* === PHOTO STRIP — fixed-height carousel, contained images, cream letterbox === */
   .strip-wrap { padding: 16px 0 0; background: var(--cream); position: relative; }
   /* Caption pill overlays the photo */
   .strip-caption {
@@ -1155,12 +1228,12 @@ footer.pp-footer {
     border-radius: 2px;
     text-shadow: 0 1px 6px rgba(0,0,0,0.6);
   }
+  /* Fixed-height stage so the carousel never jumps between slides */
   .strip-carousel {
     position: relative;
     width: 100vw;
-    /* Hug the active image — no fixed height, no dark void below */
-    height: auto;
-    aspect-ratio: auto;
+    height: 62vh;
+    aspect-ratio: auto !important;
     background: var(--cream);
     overflow: hidden;
   }
@@ -1168,7 +1241,7 @@ footer.pp-footer {
     display: block !important;
     grid-template-columns: none !important;
     width: 100% !important;
-    height: auto !important;
+    height: 100% !important;
     gap: 0 !important;
     padding: 0 !important;
     background: transparent !important;
@@ -1177,38 +1250,44 @@ footer.pp-footer {
     transform: none !important;
     position: relative !important;
   }
-  /* Quick-swap: only the active slide is in layout; parent hugs it */
+  /* Quick-swap: only the active slide visible. Each slide fills the fixed stage and centers its image. */
   .strip-item {
     display: none !important;
-    position: relative !important;
-    inset: auto !important;
-    flex: none !important;
+    position: absolute !important;
+    inset: 0 !important;
+    flex: none;
     width: 100% !important;
-    height: auto !important;
+    height: 100% !important;
     aspect-ratio: auto !important;
     max-height: none !important;
     min-height: 0 !important;
+    /* Horizontal framing — image doesn't run flush to screen edges */
+    padding: 0 20px !important;
     background: transparent;
-    overflow: visible !important;
+    overflow: hidden;
     opacity: 1;
     transition: none !important;
     pointer-events: none;
+    box-sizing: border-box !important;
   }
-  .strip-item.active { display: block !important; pointer-events: auto; }
+  .strip-item.active {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+  }
   .strip-item img {
-    width: 100% !important;
+    width: auto !important;
     height: auto !important;
-    max-height: none !important;
-    /* Natural aspect, no cropping — image dictates section height */
-    object-fit: initial !important;
-    object-position: initial !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: contain !important;
+    object-position: center center !important;
     display: block !important;
     background: transparent;
     transition: none !important;
     transform: none !important;
   }
-  /* Override the legacy 380px rule that forced 1:1 aspect crop */
-  .strip-item, .photo-strip .strip-item { aspect-ratio: auto !important; height: auto !important; }
 
   /* === CONCEPT === */
   #concept { padding: 20px 0 18px !important; }
@@ -1346,8 +1425,8 @@ footer.pp-footer {
     margin-bottom: 14px !important;
     box-shadow: 0 14px 36px rgba(0,0,0,0.55) !important;
   }
-  /* The × separator */
-  div[style*="font-size:72px"] { font-size: 28px !important; padding: 0 !important; padding-bottom: 56px !important; }
+  /* The × separator — centered vertically between the posters */
+  div[style*="font-size:72px"] { font-size: 28px !important; padding: 0 !important; align-self: center !important; }
   /* Comp poster column wrappers — let them flex to half the row */
   div[style*="padding:0 48px 24px"] { padding: 0 4px !important; }
   /* Comp titles — readable but proportionate */
@@ -1645,7 +1724,34 @@ footer.pp-footer {
     <li><a href="#brand-case">Business Case</a></li><li><a href="#brands">Brands</a></li>
     <li><a href="#casting">Casting</a></li><li><a href="#team">Team</a></li>
   </ul>
+  <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+    <svg viewBox="0 0 24 18" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <line x1="1" y1="3" x2="23" y2="3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+      <line x1="1" y1="9" x2="23" y2="9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+      <line x1="1" y1="15" x2="23" y2="15" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+    </svg>
+  </button>
 </nav>
+
+<!-- Mobile fullscreen overlay menu -->
+<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+  <button class="mobile-menu-close" aria-label="Close menu">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <line x1="3" y1="3" x2="21" y2="21" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+      <line x1="21" y1="3" x2="3" y2="21" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+    </svg>
+  </button>
+  <ul class="mobile-menu-list">
+    <li><a href="#concept">Concept</a></li>
+    <li><a href="#style">Style</a></li>
+    <li><a href="#characters">Characters</a></li>
+    <li><a href="#episodes">Episodes</a></li>
+    <li><a href="#brand-case">Business Case</a></li>
+    <li><a href="#brands">Brands</a></li>
+    <li><a href="#casting">Casting</a></li>
+    <li><a href="#team">Team</a></li>
+  </ul>
+</div>
 
 <!-- HERO -->
 <section class="splash">
@@ -2581,6 +2687,39 @@ new Chart(eCtx, {
     document.addEventListener('DOMContentLoaded', initCarousels);
   } else {
     initCarousels();
+  }
+
+  // ===== Mobile hamburger menu =====
+  function initMobileMenu() {
+    const hamburger = document.querySelector('.nav-hamburger');
+    const overlay = document.querySelector('.mobile-menu');
+    const closeBtn = overlay && overlay.querySelector('.mobile-menu-close');
+    const links = overlay && overlay.querySelectorAll('.mobile-menu-list a');
+    if (!hamburger || !overlay) return;
+
+    function open() {
+      overlay.classList.add('open');
+      overlay.setAttribute('aria-hidden', 'false');
+      hamburger.setAttribute('aria-expanded', 'true');
+      document.body.classList.add('menu-open');
+    }
+    function close() {
+      overlay.classList.remove('open');
+      overlay.setAttribute('aria-hidden', 'true');
+      hamburger.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('menu-open');
+    }
+
+    hamburger.addEventListener('click', open);
+    if (closeBtn) closeBtn.addEventListener('click', close);
+    if (links) links.forEach(a => a.addEventListener('click', close));
+    // ESC closes
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMobileMenu);
+  } else {
+    initMobileMenu();
   }
 </script>
 
