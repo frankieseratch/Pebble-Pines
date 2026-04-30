@@ -1232,10 +1232,15 @@ footer.pp-footer {
   .strip-carousel {
     position: relative;
     width: 100vw;
-    height: 74vh;
+    height: 70vh;
+    min-height: 480px;
     aspect-ratio: auto !important;
     background: var(--cream);
     overflow: hidden;
+    /* Belt-and-suspenders centering for child slide */
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .photo-strip {
     display: block !important;
@@ -1250,7 +1255,7 @@ footer.pp-footer {
     transform: none !important;
     position: relative !important;
   }
-  /* Quick-swap: only the active slide visible. Each slide fills the fixed stage and centers its image. */
+  /* Quick-swap: only the active slide visible. Each slide is centered in the stage. */
   .strip-item {
     display: none !important;
     position: absolute !important;
@@ -1261,19 +1266,20 @@ footer.pp-footer {
     aspect-ratio: auto !important;
     max-height: none !important;
     min-height: 0 !important;
-    /* Horizontal framing — image doesn't run flush to screen edges */
-    padding: 0 10px !important;
+    /* Tighter horizontal padding so image runs closer to the edges */
+    padding: 0 4px !important;
     background: transparent;
     overflow: hidden;
     opacity: 1;
     transition: none !important;
     pointer-events: none;
     box-sizing: border-box !important;
+    /* Solid vertical + horizontal centering for the image inside */
+    align-items: center !important;
+    justify-content: center !important;
   }
   .strip-item.active {
     display: flex !important;
-    align-items: center;
-    justify-content: center;
     pointer-events: auto;
   }
   .strip-item img {
@@ -1284,6 +1290,7 @@ footer.pp-footer {
     object-fit: contain !important;
     object-position: center center !important;
     display: block !important;
+    margin: auto !important;
     background: transparent;
     transition: none !important;
     transform: none !important;
